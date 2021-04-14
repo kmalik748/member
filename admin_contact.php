@@ -136,7 +136,7 @@
 
                                             <!-- Modal body -->
                                             <div class="modal-body">
-                                                Are you sure, soft delete this contact?
+                                                Are you sure, soft delete contact <?php echo $row["first_name"]; ?>?
                                             </div>
 
                                             <!-- Modal footer -->
