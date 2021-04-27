@@ -60,7 +60,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="organization-tab" data-toggle="tab" href="#organization" role="tab" aria-controls="organization" aria-selected="false">
                             <i class="fas fa-2x fa-building appColor mr-2"></i>
-                            <span>Organizations</span>
+                            <span>Chapters</span>
                         </a>
                     </li>
                     <li class="nav-item">
