@@ -385,10 +385,6 @@
                                 </div>
 
                                 <div class="tab-pane " id="log-email">
-
-                                    <div id="email-log-view-pane"><table class="table table-striped table-bordered"><thead><tr><th><a href="javascript:;" data-column-name="sendDate" data-sort-order="asc" class="column-resort">Date Sent</a></th><th><a href="javascript:;" data-column-name="emailName" data-sort-order="asc" class="column-resort">Subject</a></th><th><a href="javascript:;" data-column-name="sender" data-sort-order="asc" class="column-resort">Sent By</a></th></tr></thead><tbody><tr><td>2019-04-25 13:41:12</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="520">Vote for your favorite Member365 Personality</a></td><td><a href="/crm/contacts/view/50712">Stephen Foley</a></td></tr><tr><td>2018-06-20 18:00:57</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="100">Your Payment For Invoice #MR-2018-0006 Has Been Processed.</a></td><td><a href="/crm/contacts/view/50712">Stephen Foley</a></td></tr><tr><td>2018-05-03 14:20:58</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="22">Member365 Purchase Invoice  - # MR-2018-0006</a></td><td><a href="/crm/contacts/view/null">System Email</a></td></tr></tbody></table><a class="btn btn-primary btn-margins" name="emaillog-view-all" style="display: none;"><i class="icon-list"></i>View All Emails</a></div>
-
-
                                     <div class="modal fade in" id="email-log-view-modal">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
@@ -410,44 +406,82 @@
                                 <div class="tab-pane" id="log-fax">
 
                                     <div id="fileManagementControlsFax" class="form-horizontal">
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label for="fax-transmission-date" class="control-label">Fax Date</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <input name="fax-transmission-date" class="form-control"
-                                                       id="fax-transmission-date" placeholder=""
-                                                       value="" type="text">
-                                            </div>
-                                        </div>
-
-
-                                        <div class="row top-bottom-margins">
-                                            <div class="col-md-12">
-                                                <label class="btn btn-default">
-                                                    <input type="radio" name="fax-transmission-type" id="fax-transmission-incoming"
-                                                           value="incoming"> Incoming
-                                                </label>
-                                                <label class="btn btn-default">
-                                                    <input type="radio" name="fax-transmission-type" id="fax-transmission-outgoing" value="outgoing"> Outgoing
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row top-bottom-margins">
-                                            <div class="col-md-12">
-                                                <div class="emailFileAttch">
-                                                    <input class="form-control-file border" type="file" id="file-select" name="file-select[]">
-                                                </div>
-                                                <a class="btn btn-success mt-2" href="" id="save-fax-log"><i class="icon-save"></i>Upload</a>
-                                                <div id="uploadBarFax" class="top-bottom-margins" style="display: none;">
-                                                    <p>Upload Progress:<br><progress id="faxProgress" min="0" max="100" value="0" style="width: 500px;">0% complete</progress></p>
+                                        <form action="" method="POST" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="fax-transmission-date" class="control-label">Fax Date</label>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <input name="fax-transmission-date" class="form-control"
+                                                           id="fax-transmission-date" placeholder=""
+                                                           value="" type="text">
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row top-bottom-margins">
+                                                <div class="col-md-12">
+                                                    <label class="btn btn-default">
+                                                        <input type="radio" name="fax-transmission-type" id="fax-transmission-incoming"
+                                                               value="incoming"> Incoming
+                                                    </label>
+                                                    <label class="btn btn-default">
+                                                        <input type="radio" name="fax-transmission-type" id="fax-transmission-outgoing" value="outgoing"> Outgoing
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="row top-bottom-margins">
+                                                <div class="col-md-12">
+                                                    <div class="emailFileAttch">
+                                                        <input class="form-control-file border" type="file" id="file-select" name="uploadedFile">
+                                                    </div>
+                                                    <button type="submit" name="fexSend" class="btn btn-success mt-2" href="" id="save-fax-log"><i class="icon-save"></i>Upload</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <?php
+                                        if(isset($_POST["fexSend"])){
+                                            $message = '';
+                                            // get details of the uploaded file
+                                            $fileTmpPath = $_FILES['uploadedFile']['tmp_name'];
+                                            $fileName = $_FILES['uploadedFile']['name'];
+                                            $fileSize = $_FILES['uploadedFile']['size'];
+                                            $fileType = $_FILES['uploadedFile']['type'];
+                                            $fileNameCmps = explode(".", $fileName);
+                                            $fileExtension = strtolower(end($fileNameCmps));
+echo "ext: ".$fileExtension;
+                                            // sanitize file-name
+                                            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+
+                                            // check if file has one of the following extensions
+                                            $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc');
+
+                                            if (in_array($fileExtension, $allowedfileExtensions))
+                                            {
+                                                // directory in which the uploaded file will be moved
+                                                $uploadFileDir = './uploaded_files/';
+                                                $dest_path = $uploadFileDir . $newFileName;
+
+                                                if(move_uploaded_file($fileTmpPath, $dest_path))
+                                                {
+                                                    $message ='File is successfully uploaded.';
+                                                }
+                                                else
+                                                {
+                                                    $message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
+                                                }
+                                            }
+                                            else
+                                            {
+                                                $message = 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions);
+                                            }
+                                            echo $message;
+                                            die();exit();
+                                        }
+                                        ?>
 
                                     </div>
 
