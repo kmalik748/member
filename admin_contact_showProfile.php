@@ -18,6 +18,9 @@
   require 'parts/head.php';
 ?>
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></link>
+
 <body>
 
   <?php require 'parts/nav.php'; ?>
@@ -223,19 +226,10 @@
                                     <a class="nav-link" href="#log-email" data-toggle="tab">Emails</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#log-eblast" data-grid-trigger="datagrid_eblastlog" data-toggle="tab">eMarketing</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#log-email" data-toggle="tab">Emails</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="#log-fax" data-grid-trigger="datagrid_faxlog" data-toggle="tab">Faxes</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#log-notes" data-toggle="tab">Notes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#tab-inquiry" data-grid-trigger="datagrid_inquirylog" data-toggle="tab">Inquiries</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#log-file" data-grid-trigger="datagrid_filelog" data-toggle="tab">Files</a>
@@ -261,16 +255,16 @@
                                                 </label>
                                                 <div class="col-md-7">
                                                     <select id="phoneLogOutcomeOptions" class="form-control" name="phoneLogOutcomeOptions" required>
-                                                        <option id="telephone-call-log-option-1" value="1">
+                                                        <option id="telephone-call-log-option-1" value="Membership">
                                                             Membership
                                                         </option>
-                                                        <option id="telephone-call-log-option-2" value="2">
+                                                        <option id="telephone-call-log-option-2" value="Sponsorship">
                                                             Sponsorship
                                                         </option>
-                                                        <option id="telephone-call-log-option-3" value="3">
+                                                        <option id="telephone-call-log-option-3" value="Donation">
                                                             Donation
                                                         </option>
-                                                        <option id="telephone-call-log-option-4" value="4">
+                                                        <option id="telephone-call-log-option-4" value="Event">
                                                             Event
                                                         </option>
                                                     </select>
@@ -301,20 +295,23 @@
                                             $notes = $_POST["telephone-call-notes"];
                                             $insertUserLog = "INSERT INTO communication_logs_calls (user_id, call_date, outcome, notes)
                                                     VALUES ($pageID, '$date', '$outcome', '$notes')";
+                                            js_alert($insertUserLog);
                                             $insertEngagement = "INSERT INTO member_engagement (user_id, date_now)
-                                                    VALUES ($pageID, '$date'";
+                                                    VALUES ($pageID, '$date')";
+                                            js_alert($insertEngagement);
+                                            $adminID = getloggedInUserId();
+                                            $adminLog = insertAdminLog("Inserted Engagement For UserID # $pageID By Admin # $adminID");
 
+                                            if(phpRunSingleQuery($insertEngagement) && phpRunSingleQuery($insertUserLog) && $adminLog){
+                                                js_alert("Log Inserted");
+
+                                            }else{
+                                                js_alert("Error occurred while inserting record");
+                                            }
+                                            js_redirect("admin_contact_showProfile.php?userID=".$pageID);
                                         }
                                         ?>
-
                                     </div>
-
-                                    <hr>
-
-                                    <input type="hidden" data-for="datagrid_telephonelog" name="contactID" value="50869">
-                                    <div class="gridContents" id="datagrid_telephonelog" data-url="/crm/logging/getLog/telephone/" data-recordsperpage="5" data-currentpage="1">No records were returned.</div>
-
-
 
 
                                     <div id="telephone-log-notification-modal" class="modal fade in" style="display: none; ">
@@ -367,16 +364,6 @@
                                         <a class="btn btn-danger" href="javascript:" id="cancelEditNote" style="display: none;"><i class="icon-remove"></i>Cancel Edit</a>
                                     </div>
 
-                                    <hr>
-
-                                    <div id="noteHistoryPane" style="display: none;">
-                                        <!-- Start - For each note //-->
-                                        <div id="noteHistoryPane_Notes"></div>
-                                        <!-- End - For each note //-->
-                                        <br>
-                                        <a class="btn btn-primary btn-margins" name="viewAllNotes" id="viewAllNotes"><i class="icon-list"></i>View All Notes</a>
-                                    </div>
-
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalViewAllNotes" tabindex="-1" role="dialog" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -398,7 +385,6 @@
                                 </div>
 
                                 <div class="tab-pane " id="log-email">
-                                    <script type="text/javascript" src="/assets/javascript/emaillog.js"></script>
 
                                     <div id="email-log-view-pane"><table class="table table-striped table-bordered"><thead><tr><th><a href="javascript:;" data-column-name="sendDate" data-sort-order="asc" class="column-resort">Date Sent</a></th><th><a href="javascript:;" data-column-name="emailName" data-sort-order="asc" class="column-resort">Subject</a></th><th><a href="javascript:;" data-column-name="sender" data-sort-order="asc" class="column-resort">Sent By</a></th></tr></thead><tbody><tr><td>2019-04-25 13:41:12</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="520">Vote for your favorite Member365 Personality</a></td><td><a href="/crm/contacts/view/50712">Stephen Foley</a></td></tr><tr><td>2018-06-20 18:00:57</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="100">Your Payment For Invoice #MR-2018-0006 Has Been Processed.</a></td><td><a href="/crm/contacts/view/50712">Stephen Foley</a></td></tr><tr><td>2018-05-03 14:20:58</td><td><a href="javascript:void(0);" id="eblast-view-modal" data-emailtype="email" data-id="22">Member365 Purchase Invoice  - # MR-2018-0006</a></td><td><a href="/crm/contacts/view/null">System Email</a></td></tr></tbody></table><a class="btn btn-primary btn-margins" name="emaillog-view-all" style="display: none;"><i class="icon-list"></i>View All Emails</a></div>
 
@@ -419,13 +405,6 @@
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal -->
-                                </div>
-
-                                <div class="tab-pane" id="log-eblast">
-                                    <input type="hidden" data-for="datagrid_eblastlog" name="contactID" value="50869">
-                                    <div class="gridContents" id="datagrid_eblastlog" data-url="/crm/logging/getLog/eblast/" data-recordsperpage="5" data-has-trigger="1">
-                                        Loading...
-                                    </div>
                                 </div>
 
                                 <div class="tab-pane" id="log-fax">
@@ -491,13 +470,6 @@
                                         </div>
                                     </div>
 
-                                </div>
-
-                                <div class="tab-pane" id="tab-inquiry">
-                                    <input type="hidden" data-for="datagrid_inquirylog" name="userID" value="50724">
-                                    <div class="gridContents" id="datagrid_inquirylog" data-url="/crm/inquiries/getListing/listToReviewByUser/" data-recordsperpage="5" data-has-trigger="1">
-                                        Loading...
-                                    </div>
                                 </div>
 
                                 <div class="tab-pane" id="log-file">
@@ -717,25 +689,60 @@
 
       <!-- Modal View All telephone Records -->
       <div class="modal fade" id="viewAllTelephoneRecords" tabindex="-1" role="dialog" aria-labelledby="viewAllTelephoneRecords" aria-hidden="true">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <h5 class="modal-title" id="exampleModalLabel">Call Logs</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                       </button>
                   </div>
                   <div class="modal-body">
-                      ...
+                      <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
+                          <thead>
+                          <tr>
+                              <th>Call Date</th>
+                              <th>OutCome</th>
+                              <th>Notes</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          <?php
+                          $rows = phpMysqliFetchAll("SELECT * FROM communication_logs_calls");
+                          foreach ($rows as $row){
+                              ?>
+                              <tr>
+                                  <td><?php echo $row["call_date"];  ?></td>
+                                  <td><?php echo $row["outcome"];  ?></td>
+                                  <td><?php echo $row["notes"];  ?></td>
+                              </tr>
+                          <?php
+                          }
+                          ?>
+                          </tbody>
+                          <tfoot>
+                          <tr>
+                              <th>Call Date</th>
+                              <th>OutCome</th>
+                              <th>Notes</th>
+                          </tr>
+                          </tfoot>
+                      </table>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                   </div>
               </div>
           </div>
       </div>
 
 </body>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
 
 </html>

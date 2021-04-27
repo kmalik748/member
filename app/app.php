@@ -51,11 +51,26 @@ error_reporting(0);
 	         return true;
          }else{
 	         js_console_log(mysqli_error($GLOBALS["con"]));
+	         js_console_log("=====================================");
 	         return false;
          }
     }
 
 	function allOrganizations(){
         return phpMysqliFetchAll("SELECT * FROM organizations");
+    }
+
+    function getloggedInUserId(){
+	    session_start();
+	    return isset($_SESSION["id"]) ? $_SESSION["id"] : null;
+    }
+
+    function insertAdminLog($message){
+        $adminID = getloggedInUserId();
+        return phpRunSingleQuery("INSERT INTO adminLogs (admin_id, message) VALUES ($adminID, '$message')");
+    }
+
+    function currentPath(){
+	    return __DIR__;
     }
 ?>
