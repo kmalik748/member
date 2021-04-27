@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2021 at 11:36 AM
+-- Generation Time: Apr 27, 2021 at 12:27 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.5.37
 
@@ -263,6 +263,27 @@ INSERT INTO `users` (`id`, `first_name`, `email`, `password`, `organizationID`, 
 (2, 'Test', 'user@new.com', 'kashif@ali.com', 7, 'Helper', 'Ms.', 'a', 'User', '2021-03-30', '031185747893', 'Male', 'English', '213 Legget Drive Ottawa, Ontario K2K 3B8 Canada', 0),
 (5, 'Random', 'random@user.com', 'random', 6, 'Employee', 'M.', 'a', 'user', '3333-03-31', '3333838', 'Male', 'English', 'kadflajdf', 0);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_files`
+--
+
+CREATE TABLE `users_files` (
+  `id` int(11) NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `category` varchar(100) NOT NULL,
+  `filename` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users_files`
+--
+
+INSERT INTO `users_files` (`id`, `user_id`, `category`, `filename`) VALUES
+(1, 2, 'Fax Log', 'word.doc'),
+(2, 3, 'Email Attachement', 'FIles.zip');
+
 --
 -- Indexes for dumped tables
 --
@@ -322,6 +343,12 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users_files`
+--
+ALTER TABLE `users_files`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -375,6 +402,11 @@ ALTER TABLE `organization_category`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `users_files`
+--
+ALTER TABLE `users_files`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

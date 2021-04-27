@@ -38,8 +38,8 @@
                         Administration
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="./">Admin Logs</a>
-<!--                        <a class="dropdown-item" href="./"></a>-->
+                        <a class="dropdown-item" href="./admin_logs.php">Admin Logs</a>
+                        <a class="dropdown-item" href="./admin_users_files.php">Users Files</a>
 <!--                        <a class="dropdown-item" href="./"></a>-->
                     </div>
                 </div>
