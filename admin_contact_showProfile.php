@@ -243,94 +243,69 @@
                             </ul>
                             <div class="tab-content">
 
-                                <div class="tab-pane" id="log-notes">
-                                    <input type="hidden" name="noteID" id="noteID" value="">
-                                    <!--<label for="textareaNote" class="control-label">
-                                        <strong>Notes</strong>
-                                    </label>-->
-                                    <textarea name="textareaNote" id="textareaNote" rows="6" class="form-control my-2" placeholder="Notes"></textarea>
-
-                                    <div class="btn-margins">
-                                        <a class="btn btn-success" href="javascript:" id="saveNote"><i class="icon-save"></i>Save</a>
-                                        <a class="btn btn-danger" href="javascript:" id="cancelEditNote" style="display: none;"><i class="icon-remove"></i>Cancel Edit</a>
-                                    </div>
-
-                                    <hr>
-
-                                    <div id="noteHistoryPane" style="display: none;">
-                                        <!-- Start - For each note //-->
-                                        <div id="noteHistoryPane_Notes"></div>
-                                        <!-- End - For each note //-->
-                                        <br>
-                                        <a class="btn btn-primary btn-margins" name="viewAllNotes" id="viewAllNotes"><i class="icon-list"></i>View All Notes</a>
-                                    </div>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="modalViewAllNotes" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                                    <h5 class="modal-title">Notes History: Justine Banks</h5>
-                                                </div>
-                                                <div class="modal-body" id="noteHistoryPane_ModalNotes">
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
                                 <div class="tab-pane active" id="log-telephone">
                                     <div id="telephone-log-form-container" class="form-horizontal">
-
-                                        <div class="form-group top-bottom-margins">
-                                            <label for="telephone-call-date" class="control-label col-md-3">
-                                                Call Date
-                                            </label>
-                                            <div class="col-md-7">
-                                                <input name="telephone-call-date" class="form-control" type="date">
+                                        <form action="" method="POST">
+                                            <div class="form-group top-bottom-margins">
+                                                <label for="telephone-call-date" class="control-label col-md-3">
+                                                    Call Date
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <input name="telephone-call-date" class="form-control" type="date" required>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group top-bottom-margins">
-                                            <label for="phoneLogOutcomeOptions" class="control-label col-md-3">
-                                                Outcome
-                                            </label>
-                                            <div class="col-md-7">
-                                                <select id="phoneLogOutcomeOptions" class="form-control" name="phoneLogOutcomeOptions">
-                                                    <option id="telephone-call-log-option-1" value="1">
-                                                        Membership
-                                                    </option>
-                                                    <option id="telephone-call-log-option-2" value="2">
-                                                        Sponsorship
-                                                    </option>
-                                                    <option id="telephone-call-log-option-3" value="3">
-                                                        Donation
-                                                    </option>
-                                                    <option id="telephone-call-log-option-4" value="4">
-                                                        Event
-                                                    </option>
-                                                </select>
+                                            <div class="form-group top-bottom-margins">
+                                                <label for="phoneLogOutcomeOptions" class="control-label col-md-3">
+                                                    Outcome
+                                                </label>
+                                                <div class="col-md-7">
+                                                    <select id="phoneLogOutcomeOptions" class="form-control" name="phoneLogOutcomeOptions" required>
+                                                        <option id="telephone-call-log-option-1" value="1">
+                                                            Membership
+                                                        </option>
+                                                        <option id="telephone-call-log-option-2" value="2">
+                                                            Sponsorship
+                                                        </option>
+                                                        <option id="telephone-call-log-option-3" value="3">
+                                                            Donation
+                                                        </option>
+                                                        <option id="telephone-call-log-option-4" value="4">
+                                                            Event
+                                                        </option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="form-group top-bottom-margins">
-                                            <label for="telephone-call-notes" class="control-label col-md-3">
-                                                Notes
-                                            </label>
-                                            <div class="col-md-7">
+                                            <div class="form-group top-bottom-margins">
+                                                <label for="telephone-call-notes" class="control-label col-md-3">
+                                                    Notes
+                                                </label>
+                                                <div class="col-md-7">
                                                 <textarea id="telephone-call-notes" name="telephone-call-notes"
-                                                          class="form-control" placeholder="Notes"></textarea>
+                                                          class="form-control" placeholder="Notes" required></textarea>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <button class="btn btn-success" id="save-phone-log"><i class="icon-save"></i>Save</button>
-                                        <button class="btn btn-primary" id="view-all-phone-log"><i class="icon-list"></i>View All</button>
+                                            <button class="btn btn-success" id="save-phone-log" type="submit" name="save_telephone">
+                                                <i class="fas fa-save"></i> Save
+                                            </button>
+                                            <button class="btn btn-primary" type="button" id="view-all-phone-log" data-toggle="modal" data-target="#viewAllTelephoneRecords">
+                                                <i class="fas fa-list"></i> View All
+                                            </button>
+                                        </form>
+                                        <?php
+                                        if(isset($_POST["save_telephone"])){
+                                            $date = $_POST["telephone-call-date"];
+                                            $outcome = $_POST["phoneLogOutcomeOptions"];
+                                            $notes = $_POST["telephone-call-notes"];
+                                            $insertUserLog = "INSERT INTO communication_logs_calls (user_id, call_date, outcome, notes)
+                                                    VALUES ($pageID, '$date', '$outcome', '$notes')";
+                                            $insertEngagement = "INSERT INTO member_engagement (user_id, date_now)
+                                                    VALUES ($pageID, '$date'";
+
+                                        }
+                                        ?>
 
                                     </div>
 
@@ -373,6 +348,48 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <a href="javascript:" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane" id="log-notes">
+                                    <input type="hidden" name="noteID" id="noteID" value="">
+                                    <!--<label for="textareaNote" class="control-label">
+                                        <strong>Notes</strong>
+                                    </label>-->
+                                    <textarea name="textareaNote" id="textareaNote" rows="6" class="form-control my-2" placeholder="Notes"></textarea>
+
+                                    <div class="btn-margins">
+                                        <a class="btn btn-success" href="javascript:" id="saveNote"><i class="icon-save"></i>Save</a>
+                                        <a class="btn btn-danger" href="javascript:" id="cancelEditNote" style="display: none;"><i class="icon-remove"></i>Cancel Edit</a>
+                                    </div>
+
+                                    <hr>
+
+                                    <div id="noteHistoryPane" style="display: none;">
+                                        <!-- Start - For each note //-->
+                                        <div id="noteHistoryPane_Notes"></div>
+                                        <!-- End - For each note //-->
+                                        <br>
+                                        <a class="btn btn-primary btn-margins" name="viewAllNotes" id="viewAllNotes"><i class="icon-list"></i>View All Notes</a>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalViewAllNotes" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                                    <h5 class="modal-title">Notes History: Justine Banks</h5>
+                                                </div>
+                                                <div class="modal-body" id="noteHistoryPane_ModalNotes">
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -532,8 +549,9 @@
             </div>
 
             <div class="col-md-4 m-0 p-0">
+                <!--Subscription  Summary-->
                 <div class="card">
-                    <div class="card-header">Membership/Subsciption Summary</div>
+                    <div class="card-header"><i class="fas fa-money-bill-wave"></i> Membership/Subscription Summary</div>
                     <div class="card-body">
 
                         <ul class="nav nav-tabs" id="secondNavTabs">
@@ -626,6 +644,66 @@
                         </div>
                     </div>
                 </div>
+                <!--Engagement Score-->
+                <div class="card mt-2">
+                    <div class="card-header"><i class="fas fa-chart-bar"></i> Engagement Score 0</div>
+                    <div class="card-body">
+                        <div id="chartContainer" style="height: 270px; width: 100%;"></div>
+                        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                        <script>
+
+                            window.onload = function () {
+
+                                var chart = new CanvasJS.Chart("chartContainer", {
+                                    theme:"light2",
+                                    animationEnabled: true,
+                                    title:{
+                                        text: "Engagement"
+                                    },
+                                    axisY :{
+                                        title: "Y-axis",
+                                    },
+                                    toolTip: {
+                                        shared: "true"
+                                    },
+                                    legend:{
+                                        cursor:"pointer",
+                                        itemclick : toggleDataSeries
+                                    },
+                                    data: [{
+                                        type: "spline",
+                                        visible: true,
+                                        showInLegend: true,
+                                        name: "Score",
+                                        dataPoints: [
+                                            { label: "Mar 12th", y: 0 },
+                                            { label: "Mar 14th", y: 0 },
+                                            { label: "Mar 16th", y: 0 },
+                                            { label: "Mar 18th", y: 0 },
+                                            { label: "Mar 20th", y: 0 },
+                                            { label: "Mar 22th", y: 0 },
+                                            { label: "Mar 24th", y: 0 },
+                                            { label: "Mar 28th", y: 0 }
+                                        ]
+                                    }
+                                    ]
+                                });
+                                chart.render();
+
+                                function toggleDataSeries(e) {
+                                    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible ){
+                                        e.dataSeries.visible = false;
+                                    } else {
+                                        e.dataSeries.visible = true;
+                                    }
+                                    chart.render();
+                                }
+
+                            }
+
+                        </script>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -634,6 +712,29 @@
   require 'parts/footer.php';
 ?>
 
+
+
+
+      <!-- Modal View All telephone Records -->
+      <div class="modal fade" id="viewAllTelephoneRecords" tabindex="-1" role="dialog" aria-labelledby="viewAllTelephoneRecords" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      ...
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+              </div>
+          </div>
+      </div>
 
 </body>
 
