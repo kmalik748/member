@@ -5,7 +5,7 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
+      <div class="collapse navbar-collapse topNav" id="navbarResponsive">
         <?php
           session_start();
           if(isset($_SESSION["id"]) && $_SESSION["is_admin"]){
@@ -20,9 +20,30 @@
           <li class="nav-item <?php if($title=='Membership') echo 'active'; ?>">
             <a class="nav-link" href="./admin_membership.php">Membership Plans</a>
           </li>
-          <li class="nav-item <?php if($title=='Contact Management') echo 'active'; ?>">
-            <a class="nav-link" href="./admin_contact.php">Contacts</a>
-          </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Contacts
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="./admin_contact.php">View Contacts</a>
+                        <a class="dropdown-item" href="./admin_createContact.php">Create Contact</a>
+                        <a class="dropdown-item" href="./admin_createContact_asAdmin.php">Create Administrator</a>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administration
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="./">Admin Logs</a>
+<!--                        <a class="dropdown-item" href="./"></a>-->
+<!--                        <a class="dropdown-item" href="./"></a>-->
+                    </div>
+                </div>
+            </li>
           <li class="nav-item">
               <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-toggle="dropdown">

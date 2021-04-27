@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5deb2
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:3306
--- Generation Time: Apr 27, 2021 at 07:00 AM
--- Server version: 8.0.23-0ubuntu0.20.04.1
--- PHP Version: 7.4.3
+-- Host: 127.0.0.1
+-- Generation Time: Apr 27, 2021 at 11:36 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.5.37
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,8 +17,49 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `project_member`
+-- Database: `member`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminlogs`
+--
+
+CREATE TABLE `adminlogs` (
+  `id` int(50) NOT NULL,
+  `admin_id` int(50) NOT NULL,
+  `message` varchar(500) NOT NULL,
+  `date_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ;
+
+--
+-- Dumping data for table `adminlogs`
+--
+
+INSERT INTO `adminlogs` (`id`, `admin_id`, `message`, `date_time`) VALUES
+(10, 1, 'Inserted Engagement For UserID # 5 By Admin # 1', '2021-04-27 07:06:21.257622');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `communication_logs_calls`
+--
+
+CREATE TABLE `communication_logs_calls` (
+  `id` int(11) NOT NULL,
+  `user_id` int(50) NOT NULL,
+  `call_date` date NOT NULL,
+  `outcome` varchar(100) NOT NULL,
+  `notes` varchar(600) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `communication_logs_calls`
+--
+
+INSERT INTO `communication_logs_calls` (`id`, `user_id`, `call_date`, `outcome`, `notes`) VALUES
+(6, 5, '2021-04-27', 'Donation', 'Some notes here');
 
 -- --------------------------------------------------------
 
@@ -29,8 +68,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `donation_history` (
-  `id` int NOT NULL,
-  `userID` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
   `campaign` varchar(500) NOT NULL,
   `payment_method` varchar(500) NOT NULL,
   `amount` varchar(500) NOT NULL,
@@ -53,8 +92,8 @@ INSERT INTO `donation_history` (`id`, `userID`, `campaign`, `payment_method`, `a
 --
 
 CREATE TABLE `email_settings` (
-  `id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `general` varchar(2) NOT NULL,
   `job` varchar(2) NOT NULL,
   `review` varchar(2) NOT NULL,
@@ -82,7 +121,7 @@ INSERT INTO `email_settings` (`id`, `user_id`, `general`, `job`, `review`, `data
 --
 
 CREATE TABLE `memberships` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -102,9 +141,9 @@ INSERT INTO `memberships` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `membership_history` (
-  `id` int NOT NULL,
-  `userID` int NOT NULL,
-  `membershipID` int NOT NULL
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `membershipID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -119,11 +158,34 @@ INSERT INTO `membership_history` (`id`, `userID`, `membershipID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `member_engagement`
+--
+
+CREATE TABLE `member_engagement` (
+  `id` int(11) NOT NULL,
+  `user_id` int(6) NOT NULL,
+  `date_now` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `member_engagement`
+--
+
+INSERT INTO `member_engagement` (`id`, `user_id`, `date_now`) VALUES
+(1, 5, '2021-04-27'),
+(2, 5, '2021-04-27'),
+(3, 5, '2021-04-14'),
+(4, 5, '2021-04-27'),
+(5, 5, '2021-04-27');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `organizations`
 --
 
 CREATE TABLE `organizations` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `acronym` varchar(50) NOT NULL,
   `website` varchar(200) NOT NULL,
@@ -135,7 +197,7 @@ CREATE TABLE `organizations` (
   `parentOrganization` varchar(50) NOT NULL,
   `address` varchar(500) NOT NULL,
   `phone` varchar(30) NOT NULL,
-  `category_id` int DEFAULT NULL
+  `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -156,7 +218,7 @@ INSERT INTO `organizations` (`id`, `name`, `acronym`, `website`, `email`, `insta
 --
 
 CREATE TABLE `organization_category` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `cat` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -175,11 +237,11 @@ INSERT INTO `organization_category` (`id`, `cat`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `organizationID` int NOT NULL,
+  `organizationID` int(11) NOT NULL,
   `jobTitle` varchar(50) NOT NULL,
   `salutation` varchar(50) NOT NULL,
   `middle_name` varchar(50) NOT NULL,
@@ -206,6 +268,12 @@ INSERT INTO `users` (`id`, `first_name`, `email`, `password`, `organizationID`, 
 --
 
 --
+-- Indexes for table `communication_logs_calls`
+--
+ALTER TABLE `communication_logs_calls`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `donation_history`
 --
 ALTER TABLE `donation_history`
@@ -227,6 +295,12 @@ ALTER TABLE `memberships`
 -- Indexes for table `membership_history`
 --
 ALTER TABLE `membership_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `member_engagement`
+--
+ALTER TABLE `member_engagement`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -252,48 +326,55 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `adminlogs`
+--
+ALTER TABLE `adminlogs`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `communication_logs_calls`
+--
+ALTER TABLE `communication_logs_calls`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `donation_history`
 --
 ALTER TABLE `donation_history`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `email_settings`
 --
 ALTER TABLE `email_settings`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `memberships`
 --
 ALTER TABLE `memberships`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `membership_history`
 --
 ALTER TABLE `membership_history`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `member_engagement`
+--
+ALTER TABLE `member_engagement`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `organizations`
 --
 ALTER TABLE `organizations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `organization_category`
 --
 ALTER TABLE `organization_category`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-COMMIT;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
