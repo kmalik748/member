@@ -113,8 +113,8 @@
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="font-size: large;">
                           <a class="dropdown-item" href="#">Invite an <b>Administrator</b> to Member365</a>
-                          <a class="dropdown-item" href="#">Create a <b>Contact</b></a>
-                          <a class="dropdown-item" href="#">Create an <b>Organization</b></a>
+                          <a class="dropdown-item" href="admin_createContact.php">Create a <b>Contact</b></a>
+                          <a class="dropdown-item" href="admin_createOrganization.php">Create an <b>Organization</b></a>
                           <a class="dropdown-item" href="#">Create an <b>Event Registration Form</b></a>
                           <a class="dropdown-item" href="#">Send an <b>Email Campaign</b></a>
                           <a class="dropdown-item" href="#">Create a <b>Form</b> to collect data</a>

@@ -30,7 +30,6 @@
           <ol class="breadcrumb bg-white">
               <li class="breadcrumb-item"><a href="admin_dashboard.php" class="appColor">Home</a></li>
               <li class="breadcrumb-item"><a href="admin_contact.php" class="appColor">Contacts</a></li>
-              <li class="breadcrumb-item"><a href="admin_showOrganization.php" class="appColor">Organization</a></li>
               <li class="breadcrumb-item active" aria-current="page">Edit Organization</li>
           </ol>
       </nav>
@@ -55,8 +54,7 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Organization Name </label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="organization" value="<?php echo $userDetails["organizationID"]; ?>">
-                                        <option>-- Select Organization --</option>
+                                    <select class="form-control" id="exampleFormControlSelect1" name="organization" value="<?php echo $userDetails["organizationID"]; ?>" required>
                                         <?php
                                         $rows = allOrganizations();
                                         foreach ($rows as $row){
@@ -73,13 +71,13 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Job Title</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="jobTitle" value="<?php echo $userDetails["jobTitle"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="jobTitle" value="<?php echo $userDetails["jobTitle"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Salutation</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="salutation">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="salutation" required>
                                         <option <?php if($userDetails["salutation"]=="Mr.") echo "selected"; ?>>Mr.</option>
                                         <option <?php if($userDetails["salutation"]=="M.") echo "selected"; ?>>M.</option>
                                         <option <?php if($userDetails["salutation"]=="Dr.") echo "selected"; ?>>Dr.</option>
@@ -91,55 +89,55 @@
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">First Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="first_name" value="<?php echo $userDetails["first_name"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="first_name" value="<?php echo $userDetails["first_name"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Middle Name/Initial</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="middle_name" value="<?php echo $userDetails["middle_name"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="middle_name" value="<?php echo $userDetails["middle_name"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Last Name</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="last_name" value="<?php echo $userDetails["last_name"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="last_name" value="<?php echo $userDetails["last_name"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Email</label>
                                 <div class="col-sm-6">
-                                    <input type="email" class="form-control" id="inputEmail3" name="email" value="<?php echo $userDetails["email"]; ?>">
+                                    <input type="email" class="form-control" id="inputEmail3" name="email" value="<?php echo $userDetails["email"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Password</label>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control" id="inputEmail3" name="pass" value="<?php echo $userDetails["password"]; ?>">
+                                    <input type="password" class="form-control" id="inputEmail3" name="pass" value="<?php echo $userDetails["password"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Birth Date</label>
                                 <div class="col-sm-6">
-                                    <input type="date" class="form-control" id="inputEmail3" name="dob"  value="<?php echo $userDetails["dob"]; ?>">
+                                    <input type="date" class="form-control" id="inputEmail3" name="dob"  value="<?php echo $userDetails["dob"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Phone</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="contact_num"  value="<?php echo $userDetails["phone"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="contact_num"  value="<?php echo $userDetails["phone"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Address</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="inputEmail3" name="address"  value="<?php echo $userDetails["address"]; ?>">
+                                    <input type="text" class="form-control" id="inputEmail3" name="address"  value="<?php echo $userDetails["address"]; ?>" required>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="inputEmail3" class="col-sm-3 col-form-label">Gender</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" id="exampleFormControlSelect1" name="gender"  value="<?php echo $userDetails["gender"]; ?>">
+                                    <select class="form-control" id="exampleFormControlSelect1" name="gender"  value="<?php echo $userDetails["gender"]; ?>" required>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                         <option value="Other">Other</option>

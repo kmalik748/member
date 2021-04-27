@@ -1,5 +1,25 @@
 <?php
   require 'app/app.php';
+    if(isset($_POST["del_contact"])){
+        $id = $_POST["contact_id"];
+        $sql = "DELETE FROM users WHERE id=$id";
+        if(phpRunSingleQuery($sql)){
+  http://localhost/member/admin_contact.php          js_alert("Contact Deleted!");
+            js_redirect("admin_contact.php");
+        }else{
+            js_alert("ERROR");
+        }
+    }
+    if(isset($_POST["del_org"])){
+        $id = $_POST["org_id"];
+        $sql = "DELETE FROM organizations WHERE id=$id";
+        if(phpRunSingleQuery($sql)){
+            js_alert("Organization Deleted!");
+            js_redirect("admin_contact.php");
+        }else{
+            js_alert("ERROR");
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,7 +135,7 @@
                                         <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
                                             <i class="fas fa-user"></i>
                                         </a>
-                                        <a href="admin_editContact.php" class="text-success mr-1">
+                                        <a href="admin_editContact.php?id=<?php echo $user; ?>" class="text-success mr-1">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
@@ -127,23 +147,24 @@
                                 <div class="modal" id="delContact_<?php echo $rndom; ?>">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
+                                            <form action="" method="POST">
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Soft Delete Contact</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
 
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Soft Delete Contact</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="contact_id" value="<?php echo $row["id"]; ?>">
+                                                    Are you sure, soft delete contact <?php echo $row["first_name"]; ?>?
+                                                </div>
 
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                                Are you sure, soft delete contact <?php echo $row["first_name"]; ?>?
-                                            </div>
-
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                                            </div>
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger" name="del_contact">Delete</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -190,6 +211,7 @@
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
                                 $org_name = $row["name"];
+                                $org_id = $row["id"];
                                 $id = $row["category_id"];
                                 $s = "SELECT * FROM organization_category WHERE id = $id";
                                 $r = mysqli_query($con, $s);
@@ -207,10 +229,10 @@
                                     </td>
                                     <td><?php echo $cat; ?></td>
                                     <td>
-                                        <a href="admin_showOrganization.php?userID=<?php echo $user; ?>" class="text-info mr-1">
+                                        <a href="admin_showOrganization.php?id=<?php echo $org_id; ?>" class="text-info mr-1">
                                             <i class="fas fa-user"></i>
                                         </a>
-                                        <a href="admin_editOrganization.php" class="text-success mr-1">
+                                        <a href="admin_editOrganization.php?id=<?php echo $org_id; ?>" class="text-success mr-1">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
@@ -228,17 +250,18 @@
                                                 <h4 class="modal-title">Soft Delete Contact</h4>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
+                                            <form action="" method="POST">
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="org_id" value="<?php echo $row["id"]; ?>">
+                                                    Are you sure, soft delete  organization <?php echo $org_name; ?>?
+                                                </div>
 
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                                Are you sure, soft delete this organization?
-                                            </div>
-
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                                            </div>
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger" name="del_org">Delete</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
@@ -323,7 +346,7 @@
                                         <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
                                             <i class="fas fa-user"></i>
                                         </a>
-                                        <a href="admin_editContact.php" class="text-success mr-1">
+                                        <a href="admin_editContact.php?id=<?php echo $user; ?>" class="text-success mr-1">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
@@ -336,22 +359,23 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
 
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Soft Delete Contact</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
+                                            <form action="" method="POST">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Soft Delete Contact</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
 
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                                Are you sure, soft delete this contact?
-                                            </div>
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <input type="hidden" value="<?php echo $row["id"]; ?>" name="contact_id">
+                                                    Are you sure, soft delete this contact?
+                                                </div>
 
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                <button type="submit" class="btn btn-danger" data-dismiss="modal">Delete</button>
-                                            </div>
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger" name="del_contact">Delete</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

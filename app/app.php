@@ -20,7 +20,7 @@ error_reporting(0);
 		echo '
 			<script>window.location.replace("'.$url.'");</script>
 		';
-		header('Location: '.$url);
+//		header('Location: '.$url);
 	}
 
 	function phpMysqliFetchAll($sql){

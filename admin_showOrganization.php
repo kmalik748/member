@@ -3,10 +3,6 @@
     $pageID = isset($_GET["id"]) ? $_GET["id"] : null;
     $userID = isset($_GET["userID"]) ? $_GET["userID"] : null;
 
-    $sql = "SELECT * FROM users WHERE id = $userID";
-    $userDetails = phpMysqliFetchSingle($sql);
-    $fullName = $userDetails["first_name"].' '.$userDetails["middle_name"].' '.$userDetails["last_name"];
-
     $sql = "SELECT * FROM organizations WHERE id=".$pageID;
     $organization = phpMysqliFetchSingle($sql);
 ?>
@@ -29,7 +25,7 @@
       <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-white">
               <li class="breadcrumb-item"><a href="admin_dashboard.php" class="appColor">Home</a></li>
-              <li class="breadcrumb-item"><a href="admin_contact_showProfile.php?userID=<?php echo $userID ?>" class="appColor"><?php echo $fullName; ?></a></li>
+              <li class="breadcrumb-item"><a href="admin_contact.php" class="appColor">Contacts</a></li>
               <li class="breadcrumb-item active" aria-current="page">Organization</li>
           </ol>
       </nav>
