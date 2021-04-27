@@ -17,37 +17,36 @@
   $title =  "Users Files";
   require 'parts/head.php';
 ?>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></link>
-
-<body>
 <style>
-    .accordion-section .panel-default > .panel-heading {
-        border: 0;
-        background: #f4f4f4;
-        padding: 0;
+    .bs-example{
+        margin: 20px;
     }
-    .accordion-section .panel-default .panel-title a {
-        display: block;
-        font-style: italic;
-        font-size: 1.5rem;
-    }
-    .accordion-section .panel-default .panel-title a:after {
-        font-family: 'FontAwesome';
-        font-style: normal;
-        font-size: 3rem;
-        content: "\f106";
-        color: #1f7de2;
-        float: right;
-        margin-top: -12px;
-    }
-    .accordion-section .panel-default .panel-title a.collapsed:after {
-        content: "\f107";
-    }
-    .accordion-section .panel-default .panel-body {
-        font-size: 1.2rem;
+    .accordion .fa{
+        margin-right: 0.5rem;
+        font-size: 24px;
+        font-weight: bold;
+        position: relative;
+        top: 2px;
     }
 </style>
+<script>
+    $(document).ready(function(){
+        // Add down arrow icon for collapse element which is open by default
+        $(".collapse.show").each(function(){
+            $(this).prev(".card-header").find(".fa").addClass("fa-angle-down").removeClass("fa-angle-right");
+        });
+
+        // Toggle right and down arrow icon on show hide of collapse element
+        $(".collapse").on('show.bs.collapse', function(){
+            $(this).prev(".card-header").find(".fa").removeClass("fa-angle-right").addClass("fa-angle-down");
+        }).on('hide.bs.collapse', function(){
+            $(this).prev(".card-header").find(".fa").removeClass("fa-angle-down").addClass("fa-angle-right");
+        });
+    });
+</script>
+
+<body>
+
   <?php require 'parts/nav.php'; ?>
 
   <!-- Page Content -->
@@ -61,39 +60,50 @@
       </nav>
 
 
-      <section class="accordion-section clearfix mt-3" aria-label="Question Accordions">
-          <div class="container">
-              <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+      <div class="accordion" id="accordionExample">
       <?php
       $rows = phpMysqliFetchAll("SELECT * FROM users");
       foreach ($rows as $row){
           $uid = $row["id"];
+          $name = $row["first_name"].' '.$row["middle_name"].' '.$row["last_name"];
           ?>
-          <div class="panel panel-default">
-              <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
-                  <h3 class="panel-title">
-                      <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse_<?php echo $row["id"]; ?>" aria-expanded="true" aria-controls="collapse0">
-                          What are the benefits of Solodev CMS?
-                      </a>
-                  </h3>
+          <div class="card">
+              <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                      <button type="button" class="btn  text-dark" data-toggle="collapse" data-target="#open_<?php echo $row["id"]; ?>">
+                          <i class="fa fa-angle-right"></i>
+                          <i class="fas fa-user"></i> <?php echo $name; ?>
+                      </button>
+                  </h2>
               </div>
-              <div id="collapse_<?php echo $row["id"]; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
-                  <div class="panel-body px-3 mb-4">
+              <div id="open_<?php echo $row["id"]; ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                      <div class="d-flex">
                       <?php
           $rows1 = phpMysqliFetchAll("SELECT * FROM users_files WHERE user_id=$uid");
           foreach ($rows1 as $row1){
           ?>
-                      <?php echo $row1["filename"]; ?>
+                  <div class="flex flex-column">
+                      <p class="d-flex justify-content-center">
+                          <i class="fas fa-3x fa-file-word"></i>
+                      </p>
+                      <p><?php echo $row1["filename"]; ?></p>
+                  </div>
                       <?php } ?>
+
+                      </div>
                   </div>
               </div>
           </div>
           <?php
       }
       ?>
-              </div>
-        </div>
-      </section>
+     </div>
+
+
+
+
 
 
   </div>
@@ -102,16 +112,6 @@
   require 'parts/footer.php';
 ?>
 
-<script>
-    $('.panel-collapse').on('show.bs.collapse', function () {
-        $(this).parent('.panel').find('.fa-minus').show();
-        $(this).parent('.panel').find('.fa-plus').hide();
-    })
-    $('.panel-collapse').on('hide.bs.collapse', function () {
-        $(this).parent('.panel').find('.fa-minus').hide();
-        $(this).parent('.panel').find('.fa-plus').show();
-    })
-</script>
 </body>
 
 </html>
