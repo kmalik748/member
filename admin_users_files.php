@@ -82,13 +82,15 @@
                       <div class="d-flex">
                       <?php
           $rows1 = phpMysqliFetchAll("SELECT * FROM users_files WHERE user_id=$uid");
-          foreach ($rows1 as $row1){
+          foreach ($rows1 as $row){
           ?>
-                  <div class="flex flex-column">
-                      <p class="d-flex justify-content-center">
-                          <i class="fas fa-3x fa-file-word"></i>
-                      </p>
-                      <p><?php echo $row1["filename"]; ?></p>
+                  <div class="flex flex-column mr-2">
+                      <a target="_blank" href="uploads/<?php echo $row['filename']; ?>">
+                          <p class="d-flex justify-content-center">
+                              <i class="fas fa-3x fa-file-word"></i>
+                          </p>
+                          <p style="max-width: 100px;" class="text-center"><?php echo $row["filename"]; ?></p>
+                      </a>
                   </div>
                       <?php } ?>
 

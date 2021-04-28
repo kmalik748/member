@@ -37,6 +37,7 @@
       <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
         <thead>
             <tr>
+                <th>Log ID</th>
                 <th>Log Details</th>
                 <th>Time</th>
             </tr>
@@ -47,6 +48,7 @@
                     foreach ($rows as $row){
                         ?>
                             <tr>
+                                <td><?php echo $row["id"]; ?></td>
                                 <td><?php echo $row["message"]; ?></td>
                                 <td><?php echo date("M d, Y    h:i A", strtotime($row["date_time"])); ?></td>
                             </tr>
@@ -56,6 +58,7 @@
         </tbody>
         <tfoot>
             <tr>
+                <th>Log ID</th>
                 <th>Log Details</th>
                 <th>Time</th>
             </tr>

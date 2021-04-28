@@ -416,7 +416,7 @@
                                                 <div class="col-md-12">
                                                     <input name="fax-transmission-date" class="form-control"
                                                            id="fax-transmission-date" placeholder=""
-                                                           value="" type="text">
+                                                           value="" type="date">
                                                 </div>
                                             </div>
 
@@ -436,7 +436,7 @@
                                             <div class="row top-bottom-margins">
                                                 <div class="col-md-12">
                                                     <div class="emailFileAttch">
-                                                        <input class="form-control-file border" type="file" id="file-select" name="uploadedFile">
+                                                        <input class="form-control-file border" type="file" id="file-select" name="the_file">
                                                     </div>
                                                     <button type="submit" name="fexSend" class="btn btn-success mt-2" id="save-fax-log">
                                                         <i class="icon-save"></i>Upload
@@ -446,108 +446,133 @@
                                         </form>
                                         <?php
                                         if(isset($_POST["fexSend"])){
-                                            $message = '';
-                                            // get details of the uploaded file
-                                            $fileTmpPath = $_FILES['uploadedFile']['tmp_name'];
-                                            $fileName = $_FILES['uploadedFile']['name'];
-                                            $fileSize = $_FILES['uploadedFile']['size'];
-                                            $fileType = $_FILES['uploadedFile']['type'];
-                                            $fileNameCmps = explode(".", $fileName);
-                                            $fileExtension = strtolower(end($fileNameCmps));
-echo "ext: ".$fileExtension;
-                                            // sanitize file-name
-                                            $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+                                            $date = $_POST["fax-transmission-date"];
+                                            $type = $_POST["fax-transmission-type"];
 
-                                            // check if file has one of the following extensions
-                                            $allowedfileExtensions = array('jpg', 'gif', 'png', 'zip', 'txt', 'xls', 'doc', 'docx', 'pdf');
 
-                                            if (in_array($fileExtension, $allowedfileExtensions))
-                                            {
-                                                // directory in which the uploaded file will be moved
-                                                $uploadFileDir = __DIR__.'/user_files/';
-                                                $dest_path = $uploadFileDir . $newFileName;
-                                                echo $dest_path;
+                                            $errors = []; // Store errors here
 
-                                                if(move_uploaded_file($fileTmpPath, $dest_path))
-                                                {
-                                                    $message ='File is successfully uploaded.';
+                                            $fileExtensionsAllowed = ['jpeg','jpg','png', 'doc', 'docx', 'pdf', 'txt', 'xlx', 'xlxs']; // These will be the only file extensions allowed
+
+                                            $fileName = $_FILES['the_file']['name'];
+                                            $fileSize = $_FILES['the_file']['size'];
+                                            $fileTmpName  = $_FILES['the_file']['tmp_name'];
+                                            $fileType = $_FILES['the_file']['type'];
+
+                                            $fileExtension = strtolower(end(explode('.',$fileName)));
+
+                                            $uploadPath = 'uploads/' . basename($fileName);
+
+
+
+                                            if (! in_array($fileExtension,$fileExtensionsAllowed)) {
+                                                $errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
+                                            }
+
+                                            if ($fileSize > 4000000) {
+                                                $errors[] = "File exceeds maximum size (4MB)";
+                                            }
+
+                                            if (empty($errors)) {
+                                                $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+
+                                                if ($didUpload) {
+                                                    js_console_log("The file " . basename($fileName) . " has been uploaded");
+                                                } else {
+                                                    js_console_log("An error occurred. Please contact the administrator.");
                                                 }
-                                                else
-                                                {
-                                                    $message = 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
+                                            } else {
+                                                foreach ($errors as $error) {
+                                                    js_console_log("These are the errors" . "\n");
                                                 }
                                             }
-                                            else
-                                            {
-                                                $message = 'Upload failed. Allowed file types: ' . implode(',', $allowedfileExtensions);
+                                            $sql = "INSERT INTO users_files (user_id, category, filename) VALUES
+                                                    ($pageID, 'Fax Log', '$fileName')";
+                                            phpRunSingleQuery($sql);
+
+
+                                            $sql = "INSERT INTO communication_logs_faxes (user_id, date, type) VALUES
+                                                    ($pageID, '$date', '$type')";
+
+                                            insertAdminLog("Fax File Uploaded to User ID # $pageID");
+
+                                            if(phpRunSingleQuery($sql)){
+                                                js_alert("File Uploaded!");
+                                                js_redirect("admin_contact_showProfile.php?userID=".$pageID);
                                             }
-                                            echo $message;
-                                            die();exit();
                                         }
                                         ?>
 
                                     </div>
 
 
-
-                                    <div class="modal fade in" id="fax-log-notification-modal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                                    <h3 class="modal-title">Errors</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="fax-log-notification-pane"></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
 
                                 <div class="tab-pane" id="log-file">
 
                                     <div class="form-group" id="fileManagementControlsFile" style="margin-bottom: 2em">
-                                        <label for="filelog-select" class="control-label">
-                                            <strong>Upload File</strong>
-                                        </label>
-                                        <div class="emailFileAttch"><input type="file" id="filelog-select" name="filelog-select[]"></div>
+                                        <form action="" method="POST" enctype="multipart/form-data">
+                                            <label for="filelog-select" class="control-label">
+                                                <strong>Upload File</strong>
+                                            </label>
+                                            <div class="emailFileAttch"><input type="file" id="filelog-select" name="file"></div>
 
-                                        <a class="btn btn-success" href="javascript:;" id="save-file-log"><i class="icon-save"></i>Upload</a>
-                                        <div id="uploadBarFile" class="top-bottom-margins" style="display: none;">
-                                            <p>Upload Progress:<br><progress id="fileProgress" max="100" value="0" style="width: 500px;">0% complete</progress></p>
-                                        </div>
+                                            <button type="submit" name="upload_file" class="btn btn-success mt-2" id="save-file-log">
+                                            <i class="fas fa-save"></i> Upload
+                                            </button>
+                                        </form>
                                     </div>
+                                    <?php
+                                        if(isset($_POST["upload_file"])){
+                                            $errors = []; // Store errors here
 
-                                    <hr>
+                                            $fileExtensionsAllowed = ['jpeg','jpg','png', 'doc', 'docx', 'pdf', 'txt', 'xlx', 'xlxs']; // These will be the only file extensions allowed
 
-                                    <input type="hidden" data-for="datagrid_filelog" name="contactID" value="50869">
-                                    <div class="gridContents" id="datagrid_filelog" data-url="/crm/logging/getLog/file/" data-recordsperpage="5" data-has-trigger="1">
-                                        Loading...
-                                    </div>
+                                            $fileName = $_FILES['file']['name'];
+                                            $fileSize = $_FILES['file']['size'];
+                                            $fileTmpName  = $_FILES['file']['tmp_name'];
+                                            $fileType = $_FILES['file']['type'];
+
+                                            $fileExtension = strtolower(end(explode('.',$fileName)));
+
+                                            $uploadPath = 'uploads/' . basename($fileName);
 
 
 
-                                    <div class="modal fade in" id="file-log-notification-modal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                                    <h3 class="modal-title">Errors</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="file-log-notification-pane"></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            if (! in_array($fileExtension,$fileExtensionsAllowed)) {
+                                                $errors[] = "This file extension is not allowed. Please upload a JPEG or PNG file";
+                                            }
+
+                                            if ($fileSize > 4000000) {
+                                                $errors[] = "File exceeds maximum size (4MB)";
+                                            }
+
+                                            if (empty($errors)) {
+                                                $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+
+                                                if ($didUpload) {
+                                                    js_console_log("The file " . basename($fileName) . " has been uploaded");
+                                                } else {
+                                                    js_console_log("An error occurred. Please contact the administrator.");
+                                                }
+                                            } else {
+                                                foreach ($errors as $error) {
+                                                    alert($error);
+                                                    js_console_log("These are the errors" . "\n");
+                                                }
+                                            }
+                                            $sql = "INSERT INTO users_files (user_id, category, filename) VALUES
+                                                    ($pageID, 'Simple File', '$fileName')";
+                                            phpRunSingleQuery($sql);
+
+                                            insertAdminLog("File Uploaded to User ID # $pageID");
+
+                                            if(phpRunSingleQuery($sql)){
+                                                js_alert("File Uploaded!");
+                                                js_redirect("admin_contact_showProfile.php?userID=".$pageID);
+                                            }
+                                        }
+                                    ?>
 
                                 </div>
                             </div>
@@ -680,19 +705,29 @@ echo "ext: ".$fileExtension;
                                         itemclick : toggleDataSeries
                                     },
                                     data: [{
-                                        type: "spline",
+                                        type: "line",
                                         visible: true,
                                         showInLegend: true,
                                         name: "Score",
                                         dataPoints: [
-                                            { label: "Mar 12th", y: 0 },
-                                            { label: "Mar 14th", y: 0 },
-                                            { label: "Mar 16th", y: 0 },
-                                            { label: "Mar 18th", y: 0 },
-                                            { label: "Mar 20th", y: 0 },
-                                            { label: "Mar 22th", y: 0 },
-                                            { label: "Mar 24th", y: 0 },
-                                            { label: "Mar 28th", y: 0 }
+                                            <?php
+                                            for ($day = 0; $day <= 7; $day++) {
+                                                $date = new DateTime("$day days ago");
+                                                $temp_date = $date->format('Y-m-d');
+                                                $sql = "SELECT users_files.date_time, communication_logs_calls.call_date,
+                                                        communication_logs_faxes.date
+                                                        FROM users_files,communication_logs_calls,communication_logs_faxes
+                                                        WHERE users_files.user_id=$pageID AND 
+                                                        (users_files.date_time = '$temp_date' OR communication_logs_calls.call_date = '$temp_date'
+                                                        OR communication_logs_faxes.date = '$temp_date')";
+                                                $res = mysqli_query($GLOBALS["con"], $sql);
+                                                if(mysqli_num_rows($res)){
+                                                    echo '{ label: "'.$temp_date.'", y: 1 },';
+                                                }else{
+                                                    echo '{ label: "'.$temp_date.'", y: 0 },';
+                                                }
+                                            }
+                                            ?>
                                         ]
                                     }
                                     ]

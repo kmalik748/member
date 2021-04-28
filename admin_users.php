@@ -65,7 +65,11 @@
                       $rndom = rand();
                         ?>
                             <tr>
-                                <td><img src="img/user.jpg" class="rounded mr-2" id="nav_user_pic"><?php echo $row["first_name"]; ?></td>
+                                <td>
+                                    <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>">
+                                        <img src="img/user.jpg" class="rounded mr-2" id="nav_user_pic"><?php echo $row["first_name"]; ?>
+                                    </a>
+                                </td>
                                 <td><?php echo $row["email"]; ?></td>
                                 <td><?php echo $membership; ?></td>
                                 <td>
