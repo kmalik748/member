@@ -44,7 +44,7 @@
         </thead>
         <tbody>
                 <?php
-                    $rows = phpMysqliFetchAll("SELECT * FROM adminlogs");
+                    $rows = phpMysqliFetchAll("SELECT * FROM adminLogs");
                     foreach ($rows as $row){
                         ?>
                             <tr>

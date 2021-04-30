@@ -30,7 +30,7 @@ CREATE TABLE `adminlogs` (
   `id` int(50) NOT NULL,
   `admin_id` int(50) NOT NULL,
   `message` varchar(500) NOT NULL,
-  `date_time` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_time` timestamp(6)  NULL
 ) ;
 
 --

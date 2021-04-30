@@ -486,8 +486,11 @@
                                                     js_console_log("These are the errors" . "\n");
                                                 }
                                             }
-                                            $sql = "INSERT INTO users_files (user_id, category, filename) VALUES
-                                                    ($pageID, 'Fax Log', '$fileName')";
+
+                                            $date = date("Y-m-d");
+
+                                            $sql = "INSERT INTO users_files (user_id, category, filename, date_time) VALUES
+                                                    ($pageID, 'Fax Log', '$fileName', '$date')";
                                             phpRunSingleQuery($sql);
 
 
