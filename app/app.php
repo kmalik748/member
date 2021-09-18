@@ -61,6 +61,12 @@ error_reporting(0);
 	function allOrganizations(){
         return phpMysqliFetchAll("SELECT * FROM organizations");
     }
+	function allRecipients(){
+        return phpMysqliFetchAll("SELECT * FROM users");
+    }
+	function allCatagories(){
+        return phpMysqliFetchAll("SELECT * FROM catagories");
+    }
 
     function getloggedInUserId(){
 	    session_start();

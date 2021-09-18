@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.0.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2021 at 10:00 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.5.37
+-- Generation Time: Jun 15, 2021 at 03:28 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -30,8 +31,8 @@ CREATE TABLE `adminlogs` (
   `id` int(50) NOT NULL,
   `admin_id` int(50) NOT NULL,
   `message` varchar(500) NOT NULL,
-  `date_time` timestamp(6)  NULL
-) ;
+  `date_time` timestamp(6) NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `adminlogs`
@@ -56,6 +57,51 @@ INSERT INTO `adminlogs` (`id`, `admin_id`, `message`, `date_time`) VALUES
 (25, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:58:35.975705'),
 (26, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:59:31.604887'),
 (27, 1, 'File Uploaded to User ID # 5', '2021-04-28 19:00:08.949023');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campaign`
+--
+
+CREATE TABLE `campaign` (
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `sender_name` varchar(40) NOT NULL,
+  `sender_email` varchar(50) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `content` varchar(5000) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `campaign`
+--
+
+INSERT INTO `campaign` (`id`, `name`, `sender_name`, `sender_email`, `title`, `content`, `date_time`) VALUES
+(1, 'has', 'asd', 'askd', 'skdas', 'asdoiqjwd', '0000-00-00 00:00:00'),
+(2, '1231', 'wqeqwe', 'w12', '21312', 'dwdsdfs', '2021-05-21 16:46:54'),
+(3, 'Hello World!', 'Hello World!', 'Hello World!', 'Hello World!', 'Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!', '2021-05-21 17:18:05'),
+(4, 'hadas', 'hadas', 'hadas', 'hadas', 'hadashadashadashadashadashadashadas', '2021-05-23 12:22:16'),
+(5, 'adas', 'adas', 'adas', 'adas', 'adasadasadasadasadas', '2021-05-23 12:24:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `catagories`
+--
+
+CREATE TABLE `catagories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `catagories`
+--
+
+INSERT INTO `catagories` (`id`, `name`) VALUES
+(1, 'hello');
 
 -- --------------------------------------------------------
 
@@ -162,6 +208,39 @@ INSERT INTO `email_settings` (`id`, `user_id`, `general`, `job`, `review`, `data
 (6, 2, '', 'on', '', 'on'),
 (7, 2, 'on', 'on', '', 'on'),
 (8, 2, 'on', 'on', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
+--
+
+CREATE TABLE `event` (
+  `id` int(11) NOT NULL,
+  `catagory` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `badge` varchar(50) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `logo` varchar(100) NOT NULL,
+  `banner` varchar(100) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `address1` varchar(50) NOT NULL,
+  `address2` varchar(50) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `country` varchar(20) NOT NULL,
+  `region` varchar(11) NOT NULL,
+  `code` varchar(11) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`id`, `catagory`, `name`, `badge`, `description`, `logo`, `banner`, `start_date`, `end_date`, `address1`, `address2`, `city`, `country`, `region`, `code`, `date_time`) VALUES
+(1, 1, 'weqw', 'asdas', 'asdasd', 'el1.tif', 'eb1.jpg', '2311-12-31', '2021-01-31', 'sdasd', 'adasn', 'asdas', 'saasd', '0', '0', '2021-06-12 16:28:42'),
+(2, 1, 'asdas', 'dsad', 'asdasdm', 'el2.tif', 'eb2.jpg', '1970-01-01', '1970-01-01', 'qweqwe1', 'dqwewq', 'sdasd', 'asdasd', 'appke', '0', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -282,6 +361,30 @@ INSERT INTO `organization_category` (`id`, `cat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `recipient`
+--
+
+CREATE TABLE `recipient` (
+  `Id` int(11) NOT NULL,
+  `campaignID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `recipient`
+--
+
+INSERT INTO `recipient` (`Id`, `campaignID`, `userID`) VALUES
+(1, 3, 0),
+(2, 3, 1),
+(3, 3, 2),
+(4, 4, 1),
+(5, 4, 2),
+(6, 5, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -300,7 +403,7 @@ CREATE TABLE `users` (
   `gender` varchar(50) NOT NULL,
   `language` varchar(50) NOT NULL,
   `address` varchar(500) NOT NULL,
-  `is_admin` tinyint(1) NOT NULL DEFAULT '0'
+  `is_admin` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -339,6 +442,24 @@ INSERT INTO `users_files` (`id`, `user_id`, `category`, `filename`, `date_time`)
 --
 
 --
+-- Indexes for table `adminlogs`
+--
+ALTER TABLE `adminlogs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `campaign`
+--
+ALTER TABLE `campaign`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `catagories`
+--
+ALTER TABLE `catagories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_calls`
@@ -360,6 +481,12 @@ ALTER TABLE `donation_history`
 -- Indexes for table `email_settings`
 --
 ALTER TABLE `email_settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event`
+--
+ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -393,6 +520,12 @@ ALTER TABLE `organization_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `recipient`
+--
+ALTER TABLE `recipient`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -412,62 +545,87 @@ ALTER TABLE `users_files`
 -- AUTO_INCREMENT for table `adminlogs`
 --
 ALTER TABLE `adminlogs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `campaign`
+--
+ALTER TABLE `campaign`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `catagories`
+--
+ALTER TABLE `catagories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_calls`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `communication_logs_faxes`
 --
 ALTER TABLE `communication_logs_faxes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `donation_history`
 --
 ALTER TABLE `donation_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `email_settings`
 --
 ALTER TABLE `email_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `memberships`
 --
 ALTER TABLE `memberships`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `membership_history`
 --
 ALTER TABLE `membership_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `member_engagement`
 --
 ALTER TABLE `member_engagement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `organizations`
 --
 ALTER TABLE `organizations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 --
 -- AUTO_INCREMENT for table `organization_category`
 --
 ALTER TABLE `organization_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for table `recipient`
 --
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `users_files`
---
-ALTER TABLE `users_files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+ALTER TABLE `recipient`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

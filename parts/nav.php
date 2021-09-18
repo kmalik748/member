@@ -17,9 +17,17 @@
           <li class="nav-item <?php if($title=='Users') echo 'active'; ?>">
             <a class="nav-link" href="./admin_users.php">Users</a>
           </li>
-          <li class="nav-item <?php if($title=='Membership') echo 'active'; ?>">
-            <a class="nav-link" href="./admin_membership.php">Membership Plans</a>
-          </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Membership
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="./admin_membershipStats.php">View Membership Stats</a>
+                        <a class="dropdown-item" href="./admin_membership.php">Membership Plans</a>
+                    </div>
+                </div>
+            </li>
             <li>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -32,6 +40,12 @@
                     </div>
                 </div>
             </li>
+          <li class="nav-item <?php if($title=='Membership') echo 'active'; ?>">
+            <a class="nav-link" href="./admin_campaign.php">Email Campaigns</a>
+          </li>
+          <li class="nav-item <?php if($title=='Membership') echo 'active'; ?>">
+            <a class="nav-link" href="./admin_event.php">Events</a>
+          </li>
             <li>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
