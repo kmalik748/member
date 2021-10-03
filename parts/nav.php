@@ -1,6 +1,6 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top mb-3 myCustomNav">
-    <div class="container">
+    <div class="container-fluid">
       <a class="navbar-brand" href="#">Ace Motorsports</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,18 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="./admin_logs.php">Admin Logs</a>
                         <a class="dropdown-item" href="./admin_users_files.php">Users Files</a>
-<!--                        <a class="dropdown-item" href="./"></a>-->
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Modules
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="./admin_committees.php">Committees</a>
+                        <a class="dropdown-item" href="./admin_certificates.php">Certificates</a>
+                        <a class="dropdown-item" href="./admin_directory.php">Directory</a>
                     </div>
                 </div>
             </li>

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2021 at 03:28 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 8.0.1
+-- Generation Time: Oct 03, 2021 at 09:02 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.5.37
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -71,7 +70,7 @@ CREATE TABLE `campaign` (
   `sender_email` varchar(50) NOT NULL,
   `title` varchar(200) NOT NULL,
   `content` varchar(5000) NOT NULL,
-  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -102,6 +101,26 @@ CREATE TABLE `catagories` (
 
 INSERT INTO `catagories` (`id`, `name`) VALUES
 (1, 'hello');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `committee`
+--
+
+CREATE TABLE `committee` (
+  `id` int(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `role` varchar(100) NOT NULL,
+  `description` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `committee`
+--
+
+INSERT INTO `committee` (`id`, `name`, `role`, `description`) VALUES
+(1, '12', '', '    asdfasdfafd                                                                                                                                                                                                      ');
 
 -- --------------------------------------------------------
 
@@ -231,7 +250,7 @@ CREATE TABLE `event` (
   `country` varchar(20) NOT NULL,
   `region` varchar(11) NOT NULL,
   `code` varchar(11) NOT NULL,
-  `date_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -403,7 +422,7 @@ CREATE TABLE `users` (
   `gender` varchar(50) NOT NULL,
   `language` varchar(50) NOT NULL,
   `address` varchar(500) NOT NULL,
-  `is_admin` tinyint(1) NOT NULL DEFAULT 0
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -457,6 +476,12 @@ ALTER TABLE `campaign`
 -- Indexes for table `catagories`
 --
 ALTER TABLE `catagories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `committee`
+--
+ALTER TABLE `committee`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -546,86 +571,76 @@ ALTER TABLE `users_files`
 --
 ALTER TABLE `adminlogs`
   MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
 --
 -- AUTO_INCREMENT for table `campaign`
 --
 ALTER TABLE `campaign`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `catagories`
 --
 ALTER TABLE `catagories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
+--
+-- AUTO_INCREMENT for table `committee`
+--
+ALTER TABLE `committee`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_calls`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT for table `communication_logs_faxes`
 --
 ALTER TABLE `communication_logs_faxes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
 --
 -- AUTO_INCREMENT for table `donation_history`
 --
 ALTER TABLE `donation_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `email_settings`
 --
 ALTER TABLE `email_settings`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT for table `event`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `memberships`
 --
 ALTER TABLE `memberships`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
 --
 -- AUTO_INCREMENT for table `membership_history`
 --
 ALTER TABLE `membership_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT for table `member_engagement`
 --
 ALTER TABLE `member_engagement`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
 --
 -- AUTO_INCREMENT for table `organizations`
 --
 ALTER TABLE `organizations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `organization_category`
 --
 ALTER TABLE `organization_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
 --
 -- AUTO_INCREMENT for table `recipient`
 --
 ALTER TABLE `recipient`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

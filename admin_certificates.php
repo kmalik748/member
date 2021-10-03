@@ -4,7 +4,7 @@
         $id = $_POST["contact_id"];
         $sql = "DELETE FROM users WHERE id=$id";
         if(phpRunSingleQuery($sql)){
-            js_alert("Contact Deleted!");
+           js_alert("Contact Deleted!");
             js_redirect("admin_contact.php");
         }else{
             js_alert("ERROR");
