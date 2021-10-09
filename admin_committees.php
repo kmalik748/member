@@ -213,65 +213,30 @@
                     </div>
                     <div class="tab-pane fade" id="administrator" role="tabpanel" aria-labelledby="administrator-tab">
 
-                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_createContact_asAdmin.php">
-                            Create Administrator
-                        </a>
+                        <button class="btn btn-info mb-2 float-right mr-3"
+                           data-toggle="modal" data-target="#addNewRoleModal">
+                            Add New Role
+                        </button>
 
                         <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Permissions</th>
-                                <th>Last Login</th>
+                                <th>Role</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             require 'app/db.php';
-                            $sql = "SELECT * FROM users WHERE is_admin=1";
+                            $sql = "SELECT * FROM committee_roles";
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
-                                $user = $row["id"];
-                                $s = "SELECT * FROM membership_history WHERE userID = $user ORDER BY id DESC LIMIT 1";
-                                $r = mysqli_query($con, $s);
-                                if(mysqli_num_rows($r)){
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = $ro["membershipID"];
-                                    $s = "SELECT * FROM memberships WHERE id = $membership";
-                                    $r = mysqli_query($con, $s);
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = '<b>'.$ro["name"].'</b>';
-                                }else{
-                                    $membership = "<span class='appColor'></span>";
-                                }
-                                $rndom = rand();
                                 ?>
                                 <tr>
                                     <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>">
-                                            <img src="img/user.jpg" class="rounded mr-2" id="nav_user_pic">
-                                            <span class="appColor">
-                                                <?php echo $row["first_name"]; ?>
-                                            </span>
-                                            <p class="font-italic text-dark mb-0" style="margin-left: 35px;"><?php echo $row["email"]; ?></p>
-                                        </a>
+                                        <?php echo $row["role"]; ?>
                                     </td>
                                     <td>
-                                        <p>Manage Permissions: Yes</p>
-                                        <p>Manage Inquiries: No</p>
-                                        <p>Portal Administrator: No</p>
-                                    </td>
-                                    <td>
-                                        2021-04-12
-                                    </td>
-                                    <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
-                                            <i class="fas fa-user"></i>
-                                        </a>
-                                        <a href="admin_editContact.php?id=<?php echo $user; ?>" class="text-success mr-1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
@@ -284,20 +249,20 @@
 
                                             <form action="" method="POST">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title">Soft Delete Contact</h4>
+                                                    <h4 class="modal-title">Delete a Role</h4>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>
 
                                                 <!-- Modal body -->
                                                 <div class="modal-body">
                                                     <input type="hidden" value="<?php echo $row["id"]; ?>" name="contact_id">
-                                                    Are you sure, soft delete this contact?
+                                                    Are you sure, you want to delete this role?
                                                 </div>
 
                                                 <!-- Modal footer -->
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger" name="del_contact">Delete</button>
+                                                    <a  class="btn btn-danger" href="admin_committees.php?delRole=<?php echo $row["id"]; ?>">Delete</a>
                                                 </div>
                                             </form>
                                         </div>
@@ -305,36 +270,68 @@
                                 </div>
                                 <?php
                             }
-                            if(isset($_POST["update_membership"])){
-                                $uid = $_POST["user_id"];
-                                $membership = $_POST["membership"];
-                                $sql = "INSERT INTO membership_history (userID, membershipID) VALUES($uid, $membership)";
+                            if(isset($_GET["delRole"])){
+                                $id = $_GET["delRole"];
+                                $sql = "DELETE FROM committee_roles WHERE id = $id";
                                 if(mysqli_query($con, $sql)){
-                                    js_alert("Membership Updated!");
-                                    js_redirect("./admin_users.php");
+                                    js_alert("Role Deleted!");
+                                    js_redirect("./admin_committees.php");
                                 }
                             }
                             ?>
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Membership</th>
+                                <th>Role</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="Reports" role="tabpanel" aria-labelledby="Reports-tab">
-                        Reports Tab Content
-                    </div>
-                    <div class="tab-pane fade" id="Settings" role="tabpanel" aria-labelledby="Settings-tab">
-                        Settings Tab Content
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+      <!-- Add new category -->
+      <div class="modal" id="addNewRoleModal">
+          <div class="modal-dialog">
+              <div class="modal-content">
+
+                  <form action="" method="POST">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Add New Role</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Role Name</label>
+                              <input type="text" class="form-control" name="role" placeholder="New Role Name">
+                          </div>
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                          <button class="btn btn-danger" type="submit" name="add_newRole">Add</button>
+                      </div>
+                  </form>
+                  <?php
+                  if(isset($_POST["add_newRole"])){
+                      $name = $_POST["role"];
+                      $sql = "INSERT INTO committee_roles (role) VALUES ('$name')";
+                      if(mysqli_query($con, $sql)){
+                          js_alert("Role was added!");
+                          js_redirect("./admin_committees.php");
+                      }
+                  }
+                  ?>
+              </div>
+          </div>
+      </div>
+
 
 <?php
   require 'parts/footer.php';
