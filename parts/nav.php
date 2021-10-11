@@ -64,7 +64,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="./admin_committees.php">Committees</a>
-                        <a class="dropdown-item" href="./admin_certificates.php">Certificates</a>
+                        <a class="dropdown-item" href="./admin_certificate.php">Certificates</a>
                         <a class="dropdown-item" href="./admin_directory.php">Directory</a>
                     </div>
                 </div>

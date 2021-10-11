@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2021 at 02:53 PM
+-- Generation Time: Oct 11, 2021 at 12:29 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -106,6 +106,25 @@ INSERT INTO `catagories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `certificates`
+--
+
+CREATE TABLE `certificates` (
+  `id` int(11) NOT NULL,
+  `name` varchar(1000) NOT NULL,
+  `content` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `certificates`
+--
+
+INSERT INTO `certificates` (`id`, `name`, `content`) VALUES
+(1, 'Testing Certificate', 'Awesome Content inside');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `committee`
 --
 
@@ -140,9 +159,9 @@ CREATE TABLE `committee_roles` (
 --
 
 INSERT INTO `committee_roles` (`id`, `role`) VALUES
-(6, 'test'),
 (7, 'Portfolio Representative'),
-(8, 'General Member');
+(8, 'General Member'),
+(9, 'testing');
 
 -- --------------------------------------------------------
 
@@ -196,6 +215,27 @@ INSERT INTO `communication_logs_faxes` (`id`, `user_id`, `date`, `type`) VALUES
 (11, 5, '2021-04-07', 'incoming'),
 (12, 5, '2021-04-15', 'outgoing'),
 (13, 5, '2021-04-14', 'outgoing');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `directory`
+--
+
+CREATE TABLE `directory` (
+  `id` int(11) NOT NULL,
+  `directory_name` varchar(200) NOT NULL,
+  `categories` varchar(200) NOT NULL,
+  `classification` varchar(200) NOT NULL,
+  `display` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `directory`
+--
+
+INSERT INTO `directory` (`id`, `directory_name`, `categories`, `classification`, `display`) VALUES
+(5, 'Test Directory', 'Annual Membership,Gold Membership', 'Member Preferences,Prospective Member,Speaker', 'Public');
 
 -- --------------------------------------------------------
 
@@ -501,6 +541,12 @@ ALTER TABLE `catagories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `certificates`
+--
+ALTER TABLE `certificates`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `committee`
 --
 ALTER TABLE `committee`
@@ -522,6 +568,12 @@ ALTER TABLE `communication_logs_calls`
 -- Indexes for table `communication_logs_faxes`
 --
 ALTER TABLE `communication_logs_faxes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `directory`
+--
+ALTER TABLE `directory`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -613,6 +665,12 @@ ALTER TABLE `catagories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `certificates`
+--
+ALTER TABLE `certificates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `committee`
 --
 ALTER TABLE `committee`
@@ -622,7 +680,7 @@ ALTER TABLE `committee`
 -- AUTO_INCREMENT for table `committee_roles`
 --
 ALTER TABLE `committee_roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `communication_logs_calls`
@@ -635,6 +693,12 @@ ALTER TABLE `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_faxes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `directory`
+--
+ALTER TABLE `directory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `donation_history`

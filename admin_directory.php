@@ -1,21 +1,11 @@
 <?php
   require 'app/app.php';
-    if(isset($_POST["del_contact"])){
-        $id = $_POST["contact_id"];
-        $sql = "DELETE FROM users WHERE id=$id";
+    if(isset($_GET["del"])){
+        $id = $_GET["del"];
+        $sql = "DELETE FROM directory WHERE id=$id";
         if(phpRunSingleQuery($sql)){
-            js_alert("Contact Deleted!");
-            js_redirect("admin_contact.php");
-        }else{
-            js_alert("ERROR");
-        }
-    }
-    if(isset($_POST["del_org"])){
-        $id = $_POST["org_id"];
-        $sql = "DELETE FROM organizations WHERE id=$id";
-        if(phpRunSingleQuery($sql)){
-            js_alert("Organization Deleted!");
-            js_redirect("admin_contact.php");
+            js_alert("Directory Deleted!");
+            js_redirect("admin_directory.php");
         }else{
             js_alert("ERROR");
         }
@@ -26,7 +16,7 @@
 
 <?php
   $path =  "";
-  $title =  "Contact Management";
+  $title =  "Directory Management";
   require 'parts/head.php';
 ?>
 
@@ -42,7 +32,7 @@
       <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-white">
               <li class="breadcrumb-item"><a href="admin_dashboard.php" class="appColor">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Contact Management</li>
+              <li class="breadcrumb-item active" aria-current="page">Directory Management</li>
           </ol>
       </nav>
 
@@ -54,341 +44,150 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">
                             <i class="fas fa-2x fa-user appColor mr-2"></i>
-                            <span>Contacts</span>
+                            <span>Create Directory</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="organization-tab" data-toggle="tab" href="#organization" role="tab" aria-controls="organization" aria-selected="false">
-                            <i class="fas fa-2x fa-building appColor mr-2"></i>
-                            <span>Chapters</span>
+                            <i class="fas fa-2x fa-list appColor mr-2"></i>
+                            <span>List Directories</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="administrator-tab" data-toggle="tab" href="#administrator" role="tab" aria-controls="administrator" aria-selected="false">
-                            <i class="fas fa-2x fa-users-cog appColor mr-2"></i>
-                            <span>Administrators</span>
-                        </a>
-                    </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" id="Reports-tab" data-toggle="tab" href="#Reports" role="tab" aria-controls="Reports" aria-selected="false">-->
-<!--                            <i class="fas fa-2x fa-chart-bar appColor mr-2"></i>-->
-<!--                            <span>Reports</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" id="Settings-tab" data-toggle="tab" href="#Settings" role="tab" aria-controls="Settings" aria-selected="false">-->
-<!--                            <i class="fas fa-2x fa-cogs appColor mr-2"></i>-->
-<!--                            <span>Settings</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
                 </ul>
             </div>
             <div class="col-md-9">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_createContact.php">
-                            Create New Contact
-                        </a>
-
-                        <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Membership</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            require 'app/db.php';
-                            $sql = "SELECT * FROM users WHERE is_admin=0";
-//                            echo $sql;
-                            $res = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_array($res)){
-                                $user = $row["id"];
-                                $s = "SELECT * FROM membership_history WHERE userID = $user ORDER BY id DESC LIMIT 1";
-                                $r = mysqli_query($con, $s);
-                                if(mysqli_num_rows($r)){
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = $ro["membershipID"];
-                                    $s = "SELECT * FROM memberships WHERE id = $membership";
-                                    $r = mysqli_query($con, $s);
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = '<b>'.$ro["name"].'</b>';
-                                }else{
-                                    $membership = "<span class='appColor'>New User</span>";
-                                }
-                                $rndom = rand();
-                                ?>
-                                <tr>
-                                    <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>">
-                                            <img src="img/user.jpg" class="rounded mr-2" id="nav_user_pic">
-                                            <span class="appColor">
-                                                <?php echo $row["first_name"]; ?>
-                                            </span>
-                                            <p class="font-italic text-dark mb-0" style="margin-left: 35px;"><?php echo $row["email"]; ?></p>
-                                        </a>
-                                    </td>
-                                    <td><?php echo $membership; ?></td>
-                                    <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
-                                            <i class="fas fa-user"></i>
-                                        </a>
-                                        <a href="admin_editContact.php?id=<?php echo $user; ?>" class="text-success mr-1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <!-- Membership Modal -->
-                                <div class="modal" id="delContact_<?php echo $rndom; ?>">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <form action="" method="POST">
-                                                <!-- Modal Header -->
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Soft Delete Contact</h4>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <i class="fas fa-edit mr-2"></i>Create New Directory
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="POST" action="">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Directory Name</label>
+                                                <div class="col-sm-6">
+                                                    <input type="text" class="form-control" id="inputEmail3" name="directory_name" required="">
                                                 </div>
-
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="contact_id" value="<?php echo $row["id"]; ?>">
-                                                    Are you sure, soft delete contact <?php echo $row["first_name"]; ?>?
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Membership Category</label>
+                                                <div class="col-sm-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Annual Membership" name="categories[]">
+                                                        <label class="form-check-label" for="inlineCheckbox1">Annual Membership</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Certified Member" name="categories[]">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Certified Member</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Gold Membership" name="categories[]">
+                                                        <label class="form-check-label" for="inlineCheckbox3">Gold Membership</label>
+                                                    </div>
                                                 </div>
-
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger" name="del_contact">Delete</button>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Contact Classification</label>
+                                                <div class="col-sm-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox11" value="Award Recipients" name="classification[]">
+                                                        <label class="form-check-label" for="inlineCheckbox1">Award Recipients</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox22" value="Exhibitor" name="classification[]">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Exhibitor</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox33" value="Member Preferences" name="classification[]">
+                                                        <label class="form-check-label" for="inlineCheckbox3">Member Preferences</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox34" value="Prospective Member" name="classification[]">
+                                                        <label class="form-check-label" for="inlineCheckbox3">Prospective Member</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox35" value="Speaker" name="classification[]">
+                                                        <label class="form-check-label" for="inlineCheckbox3">Speaker</label>
+                                                    </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Display</label>
+                                                <div class="col-sm-6">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox111" value="Public" name="display[]">
+                                                        <label class="form-check-label" for="inlineCheckbox1">Public</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="checkbox" id="inlineCheckbox222" value="Member Portal" name="display[]">
+                                                        <label class="form-check-label" for="inlineCheckbox2">Member Portal</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <button type="submit" class="btn btn-info w-100 mt-2 bg-appColor" name="add_new_directory">
+                                                        <i class="fas fa-save"></i>
+                                                        Add Committee
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <?php
-                            }
-                            if(isset($_POST["update_membership"])){
-                                $uid = $_POST["user_id"];
-                                $membership = $_POST["membership"];
-                                $sql = "INSERT INTO membership_history (userID, membershipID) VALUES($uid, $membership)";
-                                if(mysqli_query($con, $sql)){
-                                    js_alert("Membership Updated!");
-                                    js_redirect("./admin_users.php");
-                                }
-                            }
-                            ?>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Membership</th>
-                                <th>Actions</th>
-                            </tr>
-                            </tfoot>
-                        </table>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="organization-tab">
-                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_createOrganization.php">
-                            Create New Organization
-                        </a>
-
-                        <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th>Organization Name</th>
-                                <th>Category</th>
-                                <th>Options</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php
-                            require 'app/db.php';
-                            $sql = "SELECT * FROM organizations";
-                            $res = mysqli_query($con, $sql);
-                            while($row = mysqli_fetch_array($res)){
-                                $org_name = $row["name"];
-                                $org_id = $row["id"];
-                                $id = $row["category_id"];
-                                $s = "SELECT * FROM organization_category WHERE id = $id";
-                                $r = mysqli_query($con, $s);
-                                if(mysqli_num_rows($r)){
-                                    $ro = mysqli_fetch_array($r);
-                                    $cat = $ro["cat"];
-                                }
-                                $rndom = rand();
-                                ?>
-                                <tr>
-                                    <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="appColor">
-                                            <?php echo $org_name; ?>
-                                        </a>
-                                    </td>
-                                    <td><?php echo $cat; ?></td>
-                                    <td>
-                                        <a href="admin_showOrganization.php?id=<?php echo $org_id; ?>" class="text-info mr-1">
-                                            <i class="fas fa-user"></i>
-                                        </a>
-                                        <a href="admin_editOrganization.php?id=<?php echo $org_id; ?>" class="text-success mr-1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <!-- Membership Modal -->
-                                <div class="modal" id="delContact_<?php echo $rndom; ?>">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Soft Delete Contact</h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-                                            <form action="" method="POST">
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <input type="hidden" name="org_id" value="<?php echo $row["id"]; ?>">
-                                                    Are you sure, soft delete  organization <?php echo $org_name; ?>?
-                                                </div>
-
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger" name="del_org">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <?php
-                            }
-                            if(isset($_POST["update_membership"])){
-                                $uid = $_POST["user_id"];
-                                $membership = $_POST["membership"];
-                                $sql = "INSERT INTO membership_history (userID, membershipID) VALUES($uid, $membership)";
-                                if(mysqli_query($con, $sql)){
-                                    js_alert("Membership Updated!");
-                                    js_redirect("./admin_users.php");
-                                }
-                            }
-                            ?>
-                            </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>Organization Name</th>
-                                <th>Category</th>
-                                <th>Options</th>
-                            </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="administrator" role="tabpanel" aria-labelledby="administrator-tab">
-
-                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_createContact_asAdmin.php">
-                            Create Administrator
+                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_directory.php">
+                            Create New Directory
                         </a>
 
                         <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Permissions</th>
-                                <th>Last Login</th>
+                                <th>Membership Category</th>
+                                <th>Contact Classification</th>
+                                <th>Display</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             require 'app/db.php';
-                            $sql = "SELECT * FROM users WHERE is_admin=1";
+                            $sql = "SELECT * FROM directory";
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
-                                $user = $row["id"];
-                                $s = "SELECT * FROM membership_history WHERE userID = $user ORDER BY id DESC LIMIT 1";
-                                $r = mysqli_query($con, $s);
-                                if(mysqli_num_rows($r)){
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = $ro["membershipID"];
-                                    $s = "SELECT * FROM memberships WHERE id = $membership";
-                                    $r = mysqli_query($con, $s);
-                                    $ro = mysqli_fetch_array($r);
-                                    $membership = '<b>'.$ro["name"].'</b>';
-                                }else{
-                                    $membership = "<span class='appColor'></span>";
-                                }
-                                $rndom = rand();
                                 ?>
                                 <tr>
+                                    <td><?php echo $row["directory_name"]; ?></td>
+                                    <td><?php echo $row["categories"]; ?></td>
+                                    <td><?php echo $row["classification"]; ?></td>
+                                    <td><?php echo $row["display"]; ?></td>
                                     <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>">
-                                            <img src="img/user.jpg" class="rounded mr-2" id="nav_user_pic">
-                                            <span class="appColor">
-                                                <?php echo $row["first_name"]; ?>
-                                            </span>
-                                            <p class="font-italic text-dark mb-0" style="margin-left: 35px;"><?php echo $row["email"]; ?></p>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <p>Manage Permissions: Yes</p>
-                                        <p>Manage Inquiries: No</p>
-                                        <p>Portal Administrator: No</p>
-                                    </td>
-                                    <td>
-                                        2021-04-12
-                                    </td>
-                                    <td>
-                                        <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
-                                            <i class="fas fa-user"></i>
-                                        </a>
-                                        <a href="admin_editContact.php?id=<?php echo $user; ?>" class="text-success mr-1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
+                                        <a href="admin_directory.php?del=<?php echo $row["id"]; ?>" class="text-danger mr-1">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                <!-- Membership Modal -->
-                                <div class="modal" id="delContact_<?php echo $rndom; ?>">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <form action="" method="POST">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Soft Delete Contact</h4>
-                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                </div>
-
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <input type="hidden" value="<?php echo $row["id"]; ?>" name="contact_id">
-                                                    Are you sure, soft delete this contact?
-                                                </div>
-
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger" name="del_contact">Delete</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                                 <?php
                             }
-                            if(isset($_POST["update_membership"])){
-                                $uid = $_POST["user_id"];
-                                $membership = $_POST["membership"];
-                                $sql = "INSERT INTO membership_history (userID, membershipID) VALUES($uid, $membership)";
-                                if(mysqli_query($con, $sql)){
-                                    js_alert("Membership Updated!");
-                                    js_redirect("./admin_users.php");
+                            if(isset($_POST["add_new_directory"])) {
+                                $directory_name = $_POST['directory_name'];
+                                $categories = implode(",",$_POST['categories']);
+                                $classification = implode(",",$_POST['classification']);
+                                $display = implode(",",$_POST['display']);
+                                $sql = "INSERT INTO directory (directory_name, categories, classification, display)
+                                        VALUES('$directory_name', '$categories', '$classification', '$display')";
+                                if (mysqli_query($con, $sql)) {
+                                    js_alert("Directory Added!");
+                                    js_redirect("./admin_directory.php");
+//                                }
                                 }
                             }
                             ?>
@@ -396,17 +195,13 @@
                             <tfoot>
                             <tr>
                                 <th>Name</th>
-                                <th>Membership</th>
+                                <th>Membership Category</th>
+                                <th>Contact Classification</th>
+                                <th>Display</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
                         </table>
-                    </div>
-                    <div class="tab-pane fade" id="Reports" role="tabpanel" aria-labelledby="Reports-tab">
-                        Reports Tab Content
-                    </div>
-                    <div class="tab-pane fade" id="Settings" role="tabpanel" aria-labelledby="Settings-tab">
-                        Settings Tab Content
                     </div>
                 </div>
             </div>
