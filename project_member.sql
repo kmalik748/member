@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2021 at 12:29 PM
+-- Generation Time: Oct 14, 2021 at 04:12 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -120,7 +120,8 @@ CREATE TABLE `certificates` (
 --
 
 INSERT INTO `certificates` (`id`, `name`, `content`) VALUES
-(1, 'Testing Certificate', 'Awesome Content inside');
+(1, 'Testing Certificate', 'Awesome Content inside'),
+(2, 'New Certificate', 'For the new contracts.. ');
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,8 @@ CREATE TABLE `committee` (
 
 INSERT INTO `committee` (`id`, `name`, `role`, `description`) VALUES
 (1, 'Committee 1', '', '    asdfasdfafd                                                                                                                                                                                                      '),
-(4, 'Testing Committee', '', '34343434343434');
+(4, 'Testing Committee', '', '34343434343434'),
+(5, 'tessssttt', '', 'Testing Description');
 
 -- --------------------------------------------------------
 
@@ -161,7 +163,8 @@ CREATE TABLE `committee_roles` (
 INSERT INTO `committee_roles` (`id`, `role`) VALUES
 (7, 'Portfolio Representative'),
 (8, 'General Member'),
-(9, 'testing');
+(9, 'testing'),
+(10, 'abc');
 
 -- --------------------------------------------------------
 
@@ -235,7 +238,7 @@ CREATE TABLE `directory` (
 --
 
 INSERT INTO `directory` (`id`, `directory_name`, `categories`, `classification`, `display`) VALUES
-(5, 'Test Directory', 'Annual Membership,Gold Membership', 'Member Preferences,Prospective Member,Speaker', 'Public');
+(6, 'My Custom Directory Settings', 'Annual Membership,Gold Membership', 'Member Preferences', 'Public,Member Portal');
 
 -- --------------------------------------------------------
 
@@ -322,6 +325,27 @@ CREATE TABLE `event` (
 INSERT INTO `event` (`id`, `catagory`, `name`, `badge`, `description`, `logo`, `banner`, `start_date`, `end_date`, `address1`, `address2`, `city`, `country`, `region`, `code`, `date_time`) VALUES
 (1, 1, 'weqw', 'asdas', 'asdasd', 'el1.tif', 'eb1.jpg', '2311-12-31', '2021-01-31', 'sdasd', 'adasn', 'asdas', 'saasd', '0', '0', '2021-06-12 16:28:42'),
 (2, 1, 'asdas', 'dsad', 'asdasdm', 'el2.tif', 'eb2.jpg', '1970-01-01', '1970-01-01', 'qweqwe1', 'dqwewq', 'sdasd', 'asdasd', 'appke', '0', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lms`
+--
+
+CREATE TABLE `lms` (
+  `id` int(10) NOT NULL,
+  `name` varchar(1000) NOT NULL,
+  `content` varchar(1000) NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `visible` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `lms`
+--
+
+INSERT INTO `lms` (`id`, `name`, `content`, `message`, `visible`) VALUES
+(1, 'abc1', '222', 'ghi3', 1);
 
 -- --------------------------------------------------------
 
@@ -595,6 +619,12 @@ ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `lms`
+--
+ALTER TABLE `lms`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `memberships`
 --
 ALTER TABLE `memberships`
@@ -668,19 +698,19 @@ ALTER TABLE `catagories`
 -- AUTO_INCREMENT for table `certificates`
 --
 ALTER TABLE `certificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `committee`
 --
 ALTER TABLE `committee`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `committee_roles`
 --
 ALTER TABLE `committee_roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `communication_logs_calls`
@@ -698,7 +728,7 @@ ALTER TABLE `communication_logs_faxes`
 -- AUTO_INCREMENT for table `directory`
 --
 ALTER TABLE `directory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `donation_history`
@@ -717,6 +747,12 @@ ALTER TABLE `email_settings`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `lms`
+--
+ALTER TABLE `lms`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `memberships`
