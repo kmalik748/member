@@ -67,6 +67,8 @@
                         <a class="dropdown-item" href="./admin_certificate.php">Certificates</a>
                         <a class="dropdown-item" href="./admin_directory.php">Directory</a>
                         <a class="dropdown-item" href="./admin_lms.php">Learning Management(LMS)</a>
+                        <a class="dropdown-item" href="./admin_fundraising.php">Fundraising</a>
+                        <a class="dropdown-item" href="./admin_jobs.php">Jobs</a>
                     </div>
                 </div>
             </li>

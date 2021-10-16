@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 14, 2021 at 04:12 PM
+-- Generation Time: Oct 16, 2021 at 08:57 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -329,6 +329,52 @@ INSERT INTO `event` (`id`, `catagory`, `name`, `badge`, `description`, `logo`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fundraising`
+--
+
+CREATE TABLE `fundraising` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `goal` int(10) NOT NULL,
+  `startdate` date NOT NULL,
+  `enddate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `fundraising`
+--
+
+INSERT INTO `fundraising` (`id`, `name`, `description`, `goal`, `startdate`, `enddate`) VALUES
+(1, '111222', '34535345', 333, '2021-10-06', '2021-10-22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` int(11) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `company` varchar(100) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `cat` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `slry_range` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jobs`
+--
+
+INSERT INTO `jobs` (`id`, `title`, `company`, `description`, `city`, `cat`, `type`, `slry_range`) VALUES
+(1, '1', '', '3', '4', 'Science', 'Full-Time', '500');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `lms`
 --
 
@@ -619,6 +665,18 @@ ALTER TABLE `event`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `fundraising`
+--
+ALTER TABLE `fundraising`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `lms`
 --
 ALTER TABLE `lms`
@@ -747,6 +805,18 @@ ALTER TABLE `email_settings`
 --
 ALTER TABLE `event`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `fundraising`
+--
+ALTER TABLE `fundraising`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `lms`
