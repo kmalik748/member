@@ -69,6 +69,7 @@
                         <a class="dropdown-item" href="./admin_lms.php">Learning Management(LMS)</a>
                         <a class="dropdown-item" href="./admin_fundraising.php">Fundraising</a>
                         <a class="dropdown-item" href="./admin_jobs.php">Jobs</a>
+                        <a class="dropdown-item" href="./admin_store.php">Store</a>
                     </div>
                 </div>
             </li>

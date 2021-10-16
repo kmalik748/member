@@ -1,18 +1,28 @@
 <?php
   require 'app/app.php';
-    if(isset($_POST["add_job"])){
-        $title = $_POST["name"];
-        $company_name = $_POST["company_name"];
-        $description = $_POST["description"];
-        $city = $_POST["city"];
+    if(isset($_POST["add_new_product"])){
+        $name = $_POST["name"];
+        $overview = $_POST["overview"];
         $cat = $_POST["cat"];
-        $type = $_POST["type"];
-        $range = $_POST["range"];
-        $sql = "INSERT INTO jobs (title, company, description, city, cat, type, slry_range) VALUES ('$title', '$company_name', '$description', '$city', '$cat', '$type',
-                                  '$range')";
+        $m_price = $_POST["m_price"];
+        $nm_price = $_POST["nm_price"];
+
+        $banner=$_FILES['banner']['name'];
+        $expbanner=explode('.',$banner);
+        $bannerexptype=$expbanner[1];
+        date_default_timezone_set('Australia/Melbourne');
+        $date = date('m/d/Yh:i:sa', time());
+        $rand=rand(10000,99999);
+        $encname=$date.$rand;
+        $bannername=md5($encname).'.'.$bannerexptype;
+        $bannerpath="uploads/products/".$bannername;
+        move_uploaded_file($_FILES["banner"]["tmp_name"],$bannerpath);
+
+
+        $sql = "INSERT INTO products (name, description, cat, m_price, nm_price, banner) VALUES ('$name', '$overview', '$cat', $m_price, $nm_price, '$bannername')";
         if(phpRunSingleQuery($sql)){
-            js_alert("Job was Added!");
-            js_redirect("admin_jobs.php");
+            js_alert("Product Added!");
+            js_redirect("admin_store.php");
         }else{
             js_alert("ERROR");
         }
@@ -47,7 +57,7 @@
 
 <?php
   $path =  "";
-  $title =  "Jobs";
+  $title =  "Store";
   require 'parts/head.php';
 ?>
 
@@ -63,7 +73,7 @@
       <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-white">
               <li class="breadcrumb-item"><a href="admin_dashboard.php" class="appColor">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Jobs</li>
+              <li class="breadcrumb-item active" aria-current="page">Store</li>
           </ol>
       </nav>
 
@@ -74,14 +84,14 @@
                 <ul class="nav nav-tabs flex-column" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="true">
-                            <i class="fas fa-2x fa-book appColor mr-2"></i>
-                            <span>Create a Job</span>
+                            <i class="fas fa-2x fa-cookie-bite appColor mr-2"></i>
+                            <span>Add Product</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="organization-tab" data-toggle="tab" href="#organization" role="tab" aria-controls="organization" aria-selected="false">
                             <i class="fas fa-2x fa-tasks appColor mr-2"></i>
-                            <span>Manage Jobs</span>
+                            <span>Manage Products</span>
                         </a>
                     </li>
                 </ul>
@@ -93,69 +103,65 @@
                             <div class="col-md-10">
                                 <div class="card">
                                     <div class="card-header">
-                                        <i class="fas fa-edit mr-2"></i>Open a new Job
+                                        <i class="fas fa-edit mr-2"></i>Add a new Fundraiser
                                     </div>
                                     <div class="card-body">
-                                        <form method="POST" action="">
+                                        <form method="POST" action=""  enctype="multipart/form-data">
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Job Title</label>
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Product Name</label>
                                                 <div class="col-sm-6">
                                                     <input type="text" class="form-control" id="inputEmail3" name="name" required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Company Name</label>
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Description</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="inputEmail3" name="company_name" required>
+                                                    <textarea class="form-control" name="overview" style="width: inherit"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Campaign Description</label>
-                                                <div class="col-sm-6">
-                                                    <textarea class="form-control" name="description" style="width: inherit"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">City</label>
-                                                <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="inputEmail3" name="city" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Job Category:</label>
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Category:</label>
                                                 <div class="col-sm-6">
                                                     <select class="form-control" id="exampleFormControlSelect1" name="cat">
-                                                        <option>Select a Job Category</option>
-                                                        <option value="Science">Science</option>
-                                                        <option value="Management">Management</option>
-                                                        <option value="Executive">Executive</option>
+                                                        <option>Select Category</option>
+                                                        <option value="Artwork">Artwork</option>
+                                                        <option value="Clothing">Clothing</option>
+                                                        <option value="Drawing and Pastel">Drawing and Pastel</option>
+                                                        <option value="Fundraiser">Fundraiser</option>
+                                                        <option value="Insurance">Insurance</option>
+                                                        <option value="Mixed Media and Printmaking">Mixed Media and Printmaking</option>
+                                                        <option value="Publications">Publications</option>
+                                                        <option value="Sponsorship">Sponsorship</option>
+                                                        <option value="SWAG">SWAG</option>
+                                                        <option value="Training">Training</option>
+                                                        <option value="Watercolor">Watercolor</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Job Type:</label>
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Member Price</label>
                                                 <div class="col-sm-6">
-                                                    <select class="form-control" id="exampleFormControlSelect1" name="type">
-                                                        <option>Select a Job Type</option>
-                                                        <option value="Contract">Contract</option>
-                                                        <option value="Full-Time">Full-Time</option>
-                                                        <option value="Part-time">Part-time</option>
-                                                        <option value="Contract">Contract</option>
-                                                    </select>
+                                                    <input type="number" class="form-control" id="inputEmail3" name="m_price" required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Salary Range</label>
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Non-Member Price</label>
                                                 <div class="col-sm-6">
-                                                    <input type="text" class="form-control" id="inputEmail3" name="range" required placeholder="100-500">
+                                                    <input type="number" class="form-control" id="inputEmail3" name="nm_price" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-3 col-form-label">Product Banner</label>
+                                                <div class="col-sm-6">
+                                                    <input type="file" class="form-control" id="inputEmail3" name="banner" required>
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-12 text-center">
-                                                    <button type="submit" class="btn btn-info w-100 mt-2 bg-appColor" name="add_job">
+                                                    <button type="submit" class="btn btn-info w-100 mt-2 bg-appColor" name="add_new_product">
                                                         <i class="fas fa-save"></i>
-                                                        Post Job
+                                                        Save
                                                     </button>
                                                 </div>
                                             </div>
@@ -167,27 +173,26 @@
 
                     </div>
                     <div class="tab-pane fade" id="organization" role="tabpanel" aria-labelledby="organization-tab">
-                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_lms.php">
-                            Create New Course
+                        <a class="btn btn-info mb-2 float-right mr-3" href="admin_store.php">
+                            Add new Product
                         </a>
 
                         <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
+                                <th>Name</th>
                                 <th>Description</th>
-                                <th>City</th>
                                 <th>Category</th>
-                                <th>Type</th>
-                                <th>Range</th>
+                                <th>Price</th>
+                                <th>Non Member Price</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php
                             require 'app/db.php';
-                            $sql = "SELECT * FROM jobs";
+                            $sql = "SELECT * FROM fundraising";
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
                                 $rndom = rand();
@@ -198,26 +203,21 @@
                                     </td>
                                     <td>
                                         <a href="" class="appColor"  data-toggle="modal" data-target="#editContact_<?php echo $rndom; ?>">
-                                            <?php echo $row["title"]; ?>
+                                            <?php echo $row["name"]; ?>
                                         </a>
-                                    </td>
-                                    <?php echo $row["company"]; ?>
                                     </td>
                                     <td><?php echo strlen($row["description"]) >= 500 ?
                                             substr($row["description"], 0, 490) . ' <a data-toggle="modal" data-target="#editContact_<?php echo $rndom; ?>">[Read more]</a>' :
                                             $row["description"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["city"]; ?>
+                                        <?php echo $row["goal"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["cat"]; ?>
+                                        <?php echo $row["startdate"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["type"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row["slry_range"]; ?>
+                                        <?php echo $row["enddate"]; ?>
                                     </td>
                                     <td>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#editContact_<?php echo $rndom; ?>">
@@ -232,7 +232,7 @@
 
                                             <!-- Modal Header -->
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Edit Job Details</h4>
+                                                <h4 class="modal-title">Edit Fundraiser Details</h4>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <form action="" method="POST">
@@ -240,29 +240,37 @@
                                                 <div class="modal-body">
                                                     <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
                                                     <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-3 col-form-label">Title</label>
+                                                        <label for="EmailContent" class="col-sm-3 col-form-label">Name</label>
                                                         <div class="col-sm-12">
-                                                            <input class="form-control" name="title" required="" value="<?php echo $row["title"]; ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-3 col-form-label">Company</label>
-                                                        <div class="col-sm-12">
-                                                            <input class="form-control" name="company" required="" value="<?php echo $row["company"]; ?>">
+                                                            <input class="form-control" name="name" required="" value="<?php echo $row["name"]; ?>">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="EmailContent" class="col-sm-12 col-form-label">Details</label>
                                                         <div class="col-sm-12">
-                                                            <textarea rows="5" class="form-control" name="description" required=""><?php echo $row["description"]; ?></textarea>
+                                                            <textarea rows="5" class="form-control" name="content" required=""><?php echo $row["description"]; ?></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-12 col-form-label">City</label>
+                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Goal</label>
                                                         <div class="col-sm-12">
-                                                            <input type="text" class="form-control" name="city" required="" value="<?php echo $row["city"]; ?>">
+                                                            <input type="number" class="form-control" name="goal" required="" value="<?php echo $row["goal"]; ?>">
                                                         </div>
                                                     </div>
+                                                    <div class="form-group row">
+                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Start Date</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="date" class="form-control" name="startdate" required="" value="<?php echo $row["startdate"]; ?>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="EmailContent" class="col-sm-12 col-form-label">End Date</label>
+                                                        <div class="col-sm-12">
+                                                            <input type="date" class="form-control" name="enddate" required="" value="<?php echo $row["enddate"]; ?>">
+                                                        </div>
+                                                    </div>
+
+
                                                 </div>
 
                                                 <!-- Modal footer -->
@@ -278,16 +286,17 @@
                             }
                             if(isset($_POST["update"])){
                                 $id = $_POST["id"];
-                                $title = $_POST["title"];
-                                $company = $_POST["company"];
-                                $description = $_POST["description"];
-                                $city = $_POST["city"];
+                                $name = $_POST["name"];
+                                $goal = $_POST["goal"];
+                                $description = $_POST["content"];
+                                $startdate = $_POST["startdate"];
+                                $enddate = $_POST["enddate"];
 
-                                $sql = "UPDATE jobs SET title='$title', description='$description', company='$company', city='$city' WHERE id = $id";
-//                                echo $sql; exit(); die();
+                                $sql = "UPDATE fundraising SET name='$name', description='$description', goal=$goal, startdate='$startdate', enddate='$enddate'
+                                         WHERE id = $id";
                                 if(mysqli_query($con, $sql)){
-                                    js_alert("Job Updated!");
-                                    js_redirect("./admin_jobs.php");
+                                    js_alert("Fundraiser Updated!");
+                                    js_redirect("./admin_fundraising.php");
                                 }else{
                                     js_alert(mysqli_error($con));
                                 }
@@ -297,12 +306,11 @@
                             <tfoot>
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
+                                <th>Name</th>
                                 <th>Description</th>
-                                <th>City</th>
-                                <th>Category</th>
-                                <th>Type</th>
-                                <th>Range</th>
+                                <th>Goal</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
