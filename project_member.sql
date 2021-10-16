@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 08:57 AM
+-- Generation Time: Oct 16, 2021 at 11:35 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -346,7 +346,8 @@ CREATE TABLE `fundraising` (
 --
 
 INSERT INTO `fundraising` (`id`, `name`, `description`, `goal`, `startdate`, `enddate`) VALUES
-(1, '111222', '34535345', 333, '2021-10-06', '2021-10-22');
+(1, '111222', '34535345', 333, '2021-10-06', '2021-10-22'),
+(2, 'New Scheme', 'Description goes here Description goes here Description goes here Description goes here', 500, '2021-10-16', '2021-10-19');
 
 -- --------------------------------------------------------
 
@@ -370,7 +371,8 @@ CREATE TABLE `jobs` (
 --
 
 INSERT INTO `jobs` (`id`, `title`, `company`, `description`, `city`, `cat`, `type`, `slry_range`) VALUES
-(1, '1', '', '3', '4', 'Science', 'Full-Time', '500');
+(1, '1', '3563636363636', '3', '5', 'Science', 'Full-Time', '500'),
+(2, 'Content Writer ', 'Ace Motorsports', 'A content writer is required ', 'LA', 'Management', 'Contract', '350');
 
 -- --------------------------------------------------------
 
@@ -508,6 +510,30 @@ CREATE TABLE `organization_category` (
 INSERT INTO `organization_category` (`id`, `cat`) VALUES
 (1, 'Corporate Membership'),
 (2, 'Gold Membership');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL,
+  `name` varchar(1000) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  `cat` varchar(1000) NOT NULL,
+  `m_price` int(10) NOT NULL,
+  `nm_price` int(10) NOT NULL,
+  `banner` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `description`, `cat`, `m_price`, `nm_price`, `banner`) VALUES
+(2, '1', '2', 'Drawing and Pastel', 3, 4, '9f644fefa531ef12d7c0e9b5be741606.png'),
+(3, 'Car Tyres', 'Brand new car tyres', 'Training', 200, 250, '3d012185bb48fd5582e1163f4a200a45.png');
 
 -- --------------------------------------------------------
 
@@ -713,6 +739,12 @@ ALTER TABLE `organization_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `recipient`
 --
 ALTER TABLE `recipient`
@@ -810,13 +842,13 @@ ALTER TABLE `event`
 -- AUTO_INCREMENT for table `fundraising`
 --
 ALTER TABLE `fundraising`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lms`
@@ -853,6 +885,12 @@ ALTER TABLE `organizations`
 --
 ALTER TABLE `organization_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `products`
+--
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `recipient`

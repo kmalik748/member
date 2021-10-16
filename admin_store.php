@@ -182,6 +182,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Pic</th>
                                 <th>Description</th>
                                 <th>Category</th>
                                 <th>Price</th>
@@ -192,7 +193,7 @@
                             <tbody>
                             <?php
                             require 'app/db.php';
-                            $sql = "SELECT * FROM fundraising";
+                            $sql = "SELECT * FROM products";
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
                                 $rndom = rand();
@@ -206,18 +207,21 @@
                                             <?php echo $row["name"]; ?>
                                         </a>
                                     </td>
+                                    <td>
+                                        <img style="width: 50px;" src="uploads/products/<?php echo $row["banner"]; ?>" alt="">
+                                    </td>
                                     <td><?php echo strlen($row["description"]) >= 500 ?
                                             substr($row["description"], 0, 490) . ' <a data-toggle="modal" data-target="#editContact_<?php echo $rndom; ?>">[Read more]</a>' :
                                             $row["description"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["goal"]; ?>
+                                        <?php echo $row["cat"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["startdate"]; ?>
+                                        <?php echo $row["m_price"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["enddate"]; ?>
+                                        <?php echo $row["nm_price"]; ?>
                                     </td>
                                     <td>
                                         <a href="" class="text-danger mr-1" data-toggle="modal" data-target="#editContact_<?php echo $rndom; ?>">
@@ -232,7 +236,7 @@
 
                                             <!-- Modal Header -->
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Edit Fundraiser Details</h4>
+                                                <h4 class="modal-title">Edit Product Details</h4>
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                             </div>
                                             <form action="" method="POST">
@@ -252,25 +256,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Goal</label>
+                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Member Price</label>
                                                         <div class="col-sm-12">
-                                                            <input type="number" class="form-control" name="goal" required="" value="<?php echo $row["goal"]; ?>">
+                                                            <input type="number" class="form-control" name="m_price" required="" value="<?php echo $row["m_price"]; ?>">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Start Date</label>
+                                                        <label for="EmailContent" class="col-sm-12 col-form-label">Non member price</label>
                                                         <div class="col-sm-12">
-                                                            <input type="date" class="form-control" name="startdate" required="" value="<?php echo $row["startdate"]; ?>">
+                                                            <input type="number" class="form-control" name="nm_price" required="" value="<?php echo $row["nm_price"]; ?>">
                                                         </div>
                                                     </div>
-                                                    <div class="form-group row">
-                                                        <label for="EmailContent" class="col-sm-12 col-form-label">End Date</label>
-                                                        <div class="col-sm-12">
-                                                            <input type="date" class="form-control" name="enddate" required="" value="<?php echo $row["enddate"]; ?>">
-                                                        </div>
-                                                    </div>
-
-
                                                 </div>
 
                                                 <!-- Modal footer -->
@@ -287,16 +283,16 @@
                             if(isset($_POST["update"])){
                                 $id = $_POST["id"];
                                 $name = $_POST["name"];
-                                $goal = $_POST["goal"];
+                                $content = $_POST["content"];
                                 $description = $_POST["content"];
-                                $startdate = $_POST["startdate"];
-                                $enddate = $_POST["enddate"];
+                                $m_price = $_POST["m_price"];
+                                $nm_price = $_POST["nm_price"];
 
-                                $sql = "UPDATE fundraising SET name='$name', description='$description', goal=$goal, startdate='$startdate', enddate='$enddate'
+                                $sql = "UPDATE products SET name='$name', description='$description', m_price=$m_price, nm_price=$nm_price
                                          WHERE id = $id";
                                 if(mysqli_query($con, $sql)){
-                                    js_alert("Fundraiser Updated!");
-                                    js_redirect("./admin_fundraising.php");
+                                    js_alert("Product Updated!");
+                                    js_redirect("./admin_store.php");
                                 }else{
                                     js_alert(mysqli_error($con));
                                 }
@@ -307,6 +303,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Pic</th>
                                 <th>Description</th>
                                 <th>Goal</th>
                                 <th>Start Date</th>
