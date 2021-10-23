@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2021 at 11:35 AM
+-- Generation Time: Oct 23, 2021 at 08:26 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -562,6 +562,28 @@ INSERT INTO `recipient` (`Id`, `campaignID`, `userID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `survey`
+--
+
+CREATE TABLE `survey` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `cat` varchar(200) NOT NULL,
+  `date1` date NOT NULL,
+  `date2` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `survey`
+--
+
+INSERT INTO `survey` (`id`, `name`, `cat`, `date1`, `date2`) VALUES
+(1, 'Test Survey', 'Events', '2021-10-07', '2021-10-14'),
+(2, 'Survey#2', 'Events', '2021-10-23', '2021-10-24');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -613,6 +635,50 @@ CREATE TABLE `users_files` (
 INSERT INTO `users_files` (`id`, `user_id`, `category`, `filename`, `date_time`) VALUES
 (12, 5, 'Simple File', 'Gmail - Fwd_ Keysight Items.pdf', '2021-04-27'),
 (13, 5, 'Simple File', 'Final Doc1.docx', '2021-04-29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `videolibrary`
+--
+
+CREATE TABLE `videolibrary` (
+  `id` int(11) NOT NULL,
+  `title` varchar(200) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `cat` varchar(200) NOT NULL,
+  `embed` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `videolibrary`
+--
+
+INSERT INTO `videolibrary` (`id`, `title`, `description`, `cat`, `embed`) VALUES
+(1, 'Testing Youtube', 'Testing Video', 'For LMS', 'https://youtu.be/vLycNstjOl4'),
+(2, 'Tutorial Video', 'How to use our CMS', 'For LMS', 'https://www.youtube.com/acemotorsports/videoLInk');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vote`
+--
+
+CREATE TABLE `vote` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `cat` varchar(200) NOT NULL,
+  `date1` date NOT NULL,
+  `date2` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vote`
+--
+
+INSERT INTO `vote` (`id`, `name`, `cat`, `date1`, `date2`) VALUES
+(1, 'New Vote', 'Canine Advanced', '2021-10-15', '2021-10-18'),
+(2, 'Members Voting (Delayed)', 'Membership', '2021-10-22', '2021-10-27');
 
 --
 -- Indexes for dumped tables
@@ -751,6 +817,12 @@ ALTER TABLE `recipient`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `survey`
+--
+ALTER TABLE `survey`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -760,6 +832,18 @@ ALTER TABLE `users`
 -- Indexes for table `users_files`
 --
 ALTER TABLE `users_files`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `videolibrary`
+--
+ALTER TABLE `videolibrary`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `vote`
+--
+ALTER TABLE `vote`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -897,6 +981,24 @@ ALTER TABLE `products`
 --
 ALTER TABLE `recipient`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `survey`
+--
+ALTER TABLE `survey`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `videolibrary`
+--
+ALTER TABLE `videolibrary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `vote`
+--
+ALTER TABLE `vote`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

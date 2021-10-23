@@ -70,6 +70,9 @@
                         <a class="dropdown-item" href="./admin_fundraising.php">Fundraising</a>
                         <a class="dropdown-item" href="./admin_jobs.php">Jobs</a>
                         <a class="dropdown-item" href="./admin_store.php">Store</a>
+                        <a class="dropdown-item" href="./admin_survey.php">Surveys</a>
+                        <a class="dropdown-item" href="./admin_votes.php">Votes</a>
+                        <a class="dropdown-item" href="./admin_videoLibrary.php">Video Library</a>
                     </div>
                 </div>
             </li>
