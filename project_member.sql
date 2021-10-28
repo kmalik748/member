@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2021 at 08:26 PM
+-- Generation Time: Oct 28, 2021 at 11:15 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -514,6 +514,57 @@ INSERT INTO `organization_category` (`id`, `cat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` int(11) NOT NULL,
+  `b1` int(4) NOT NULL,
+  `b2` int(4) NOT NULL,
+  `b3` int(4) NOT NULL,
+  `b4` int(4) NOT NULL,
+  `b5` int(4) NOT NULL,
+  `b6` int(4) NOT NULL,
+  `b7` int(4) NOT NULL,
+  `b8` int(4) NOT NULL,
+  `b9` int(4) NOT NULL,
+  `b10` int(4) NOT NULL,
+  `b11` int(4) NOT NULL,
+  `b12` int(4) NOT NULL,
+  `b13` int(4) NOT NULL,
+  `b14` int(4) NOT NULL,
+  `b15` int(4) NOT NULL,
+  `b16` int(4) NOT NULL,
+  `b17` int(4) NOT NULL,
+  `b18` int(4) NOT NULL,
+  `b19` int(4) NOT NULL,
+  `b20` int(4) NOT NULL,
+  `b21` int(4) NOT NULL,
+  `b22` int(4) NOT NULL,
+  `b23` int(4) NOT NULL,
+  `b24` int(4) NOT NULL,
+  `b25` int(4) NOT NULL,
+  `b26` int(4) NOT NULL,
+  `b27` int(4) NOT NULL,
+  `b28` varchar(4) NOT NULL,
+  `b29` varchar(4) NOT NULL,
+  `b30` varchar(4) NOT NULL,
+  `b31` varchar(4) NOT NULL,
+  `b32` varchar(4) NOT NULL,
+  `b33` varchar(4) NOT NULL,
+  `b34` varchar(4) NOT NULL,
+  `b35` varchar(4) NOT NULL,
+  `b36` varchar(4) NOT NULL,
+  `b37` varchar(4) NOT NULL,
+  `b38` varchar(4) NOT NULL,
+  `b39` varchar(4) NOT NULL,
+  `b40` varchar(4) NOT NULL,
+  `uid` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -805,6 +856,12 @@ ALTER TABLE `organization_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -969,6 +1026,12 @@ ALTER TABLE `organizations`
 --
 ALTER TABLE `organization_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
