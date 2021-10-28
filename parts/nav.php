@@ -76,6 +76,16 @@
                     </div>
                 </div>
             </li>
+            <li>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle bg-transparent border-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Reports
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="./admin_permissions.php">Admin Permissions</a>
+                    </div>
+                </div>
+            </li>
           <li class="nav-item">
               <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle bg-transparent border-0" data-toggle="dropdown">
