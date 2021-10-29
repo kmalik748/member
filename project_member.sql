@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2021 at 11:15 AM
+-- Generation Time: Oct 29, 2021 at 01:08 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -546,21 +546,37 @@ CREATE TABLE `permissions` (
   `b25` int(4) NOT NULL,
   `b26` int(4) NOT NULL,
   `b27` int(4) NOT NULL,
-  `b28` varchar(4) NOT NULL,
-  `b29` varchar(4) NOT NULL,
-  `b30` varchar(4) NOT NULL,
-  `b31` varchar(4) NOT NULL,
-  `b32` varchar(4) NOT NULL,
-  `b33` varchar(4) NOT NULL,
-  `b34` varchar(4) NOT NULL,
-  `b35` varchar(4) NOT NULL,
-  `b36` varchar(4) NOT NULL,
-  `b37` varchar(4) NOT NULL,
-  `b38` varchar(4) NOT NULL,
-  `b39` varchar(4) NOT NULL,
-  `b40` varchar(4) NOT NULL,
+  `b28` int(4) NOT NULL,
+  `b29` int(4) NOT NULL,
+  `b30` int(4) NOT NULL,
+  `b31` int(4) NOT NULL,
+  `b32` int(4) NOT NULL,
+  `b33` int(4) NOT NULL,
+  `b34` int(4) NOT NULL,
+  `b35` int(4) NOT NULL,
+  `b36` int(4) NOT NULL,
+  `b37` int(4) NOT NULL,
+  `b38` int(4) NOT NULL,
+  `b39` int(4) NOT NULL,
+  `b40` int(4) NOT NULL,
   `uid` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `b1`, `b2`, `b3`, `b4`, `b5`, `b6`, `b7`, `b8`, `b9`, `b10`, `b11`, `b12`, `b13`, `b14`, `b15`, `b16`, `b17`, `b18`, `b19`, `b20`, `b21`, `b22`, `b23`, `b24`, `b25`, `b26`, `b27`, `b28`, `b29`, `b30`, `b31`, `b32`, `b33`, `b34`, `b35`, `b36`, `b37`, `b38`, `b39`, `b40`, `uid`) VALUES
+(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2),
+(8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5),
+(9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 5),
+(10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -1031,7 +1047,7 @@ ALTER TABLE `organization_category`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`

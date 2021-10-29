@@ -43,11 +43,14 @@
         $b38 = isset($_POST["b38"]) ? "1" : "";
         $b39 = isset($_POST["b39"]) ? "1" : "";
         $b40 = isset($_POST["b40"]) ? "1" : "";
+        $uid = $_POST["uid"];
 
         $sql = "INSERT INTO permissions (b1, b2, b3, b4, b5, b6, b7, b8,b9, b10, b11, b12, b13, b14, b15, b16, b17, b18, b19, b20,
-                         b21, b22, b23, b24, b25, b26, b27, b28, b29, b30, b31, b32, b33, b34, b35, b36, b37, b38, b39, b49, uid) VALUES 
-                         ('$b1', '$b2', '$b3', '$b4')";
-
+                         b21, b22, b23, b24, b25, b26, b27, b28, b29, b30, b31, b32, b33, b34, b35, b36, b37, b38, b39, b40, uid) VALUES 
+                         ('$b1', '$b2', '$b3', '$b4', '$b5', '$b6', '$b7', '$b8', '$b9', '$b10',
+                         '$b11', '$b12', '$b13', '$b14', '$b15', '$b16', '$b17', '$b18', '$b19', '$b20',
+                          '$b21', '$b22', '$b23', '$b24', '$b25', '$b26', '$b27', '$b28', '$b29', '$b30',
+                          '$b31', '$b32', '$b33', '$b34', '$b35', '$b36', '$b37', '$b38', '$b39', '$b40', $uid)";
 //        $sql = "UPDATE permissions SET
 //                b1='$b1', b2='$b2', b3='$b3', b4='$b4', b5='$b4',
 //                b6='$b6', b7='$b7', b8='$b8', b9='$b9', b10='$b10',
@@ -58,9 +61,6 @@
 //                b31='$b31', b32='$b32', b33='$b33', b34='$b34', b35='$b35',
 //                b36='$b36', b37='$b37', b38='$b38', b39='$b39', b40='$b40'
 //                WHERE uid = $id";
-
-
-//        echo $sql; exit(); die();
         if(phpRunSingleQuery($sql)){
             js_alert("Permissions Updated!");
             js_redirect("admin_permissions.php");
@@ -68,6 +68,11 @@
             js_alert("ERROR");
         }
     }
+
+    $uid = $_GET["userID"];
+    $sql = "SELECT * FROM permissions WHERE uid=$uid ORDER BY id DESC";
+    $res = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($res);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,91 +116,91 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b1" name="b1">
+                                <input class="form-check-input" type="checkbox" <?php echo !empty($row["b1"]) ? "checked" : ''; ?> id="b1" name="b1">
                                 <label class="form-check-label" for="b1">
                                     Users Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b2" name="b2">
+                                <input class="form-check-input" type="checkbox" <?php echo !empty($row["b2"]) ? "checked" : ''; ?>  id="b2" name="b2">
                                 <label class="form-check-label" for="b2">
                                     Add User
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b3" name="b3">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b3"]) ? "checked" : ''; ?>  id="b3" name="b3">
                                 <label class="form-check-label" for="b3">
                                     Update User
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b4" name="b4">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b4"]) ? "checked" : ''; ?>  id="b4" name="b4">
                                 <label class="form-check-label" for="b4">
                                     Delete User
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b5" name="b5">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b5"]) ? "checked" : ''; ?>  id="b5" name="b5">
                                 <label class="form-check-label" for="b5">
                                     Organizations Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b6" name="b6">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b6"]) ? "checked" : ''; ?>  id="b6" name="b6">
                                 <label class="form-check-label" for="b6">
                                     Create Organization
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b7" name="b7">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b7"]) ? "checked" : ''; ?>  id="b7" name="b7">
                                 <label class="form-check-label" for="b7">
                                     Update Organization
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b8" name="b8">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b8"]) ? "checked" : ''; ?>  id="b8" name="b8">
                                 <label class="form-check-label" for="b8">
                                     Delete Organization
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b9" name="b9">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b9"]) ? "checked" : ''; ?>  id="b9" name="b9">
                                 <label class="form-check-label" for="b9">
                                     Membership Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b10" name="b10">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b10"]) ? "checked" : ''; ?>  id="b10" name="b10">
                                 <label class="form-check-label" for="b10">
                                     Add new Membership
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b11" name="b11">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b11"]) ? "checked" : ''; ?>  id="b11" name="b11">
                                 <label class="form-check-label" for="b11">
                                     Update Membership
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b12" name="b12">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b12"]) ? "checked" : ''; ?>  id="b12" name="b12">
                                 <label class="form-check-label" for="b12">
                                     Delete Membership
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b13" name="b13">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b13"]) ? "checked" : ''; ?>  id="b13" name="b13">
                                 <label class="form-check-label" for="b13">
                                     Email Campaign Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b14" name="b14">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b14"]) ? "checked" : ''; ?>  id="b14" name="b14">
                                 <label class="form-check-label" for="b14">
                                     Add a new Campaign
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b15" name="b15">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b15"]) ? "checked" : ''; ?>  id="b15" name="b15">
                                 <label class="form-check-label" for="b15">
                                     Delete a new Campaign
                                 </label>
@@ -203,79 +208,79 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b16" name="b16">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b16"]) ? "checked" : ''; ?>  id="b16" name="b16">
                                 <label class="form-check-label" for="b16">
                                     Events Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b17" name="b17">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b17"]) ? "checked" : ''; ?>  id="b17" name="b17">
                                 <label class="form-check-label" for="b17">
                                     Add Event
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b18" name="b18">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b18"]) ? "checked" : ''; ?>  id="b18" name="b18">
                                 <label class="form-check-label" for="b18">
                                     Update Event
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b19" name="b19">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b19"]) ? "checked" : ''; ?>  id="b19" name="b19">
                                 <label class="form-check-label" for="b19">
                                     Delete Event
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b20" name="b20">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b20"]) ? "checked" : ''; ?>  id="b20" name="b20">
                                 <label class="form-check-label" for="b20">
                                     Committee Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b21" name="b21">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b21"]) ? "checked" : ''; ?>  id="b21" name="b21">
                                 <label class="form-check-label" for="b21">
                                     Add Committee
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b22" name="b22">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b22"]) ? "checked" : ''; ?>  id="b22" name="b22">
                                 <label class="form-check-label" for="b22">
                                     Edit Committee
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b23" name="b23">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b23"]) ? "checked" : ''; ?>  id="b23" name="b23">
                                 <label class="form-check-label" for="b23">
                                     Certificates Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b24" name="b24">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b24"]) ? "checked" : ''; ?>  id="b24" name="b24">
                                 <label class="form-check-label" for="b24">
                                     Create Certificate
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b25" name="b25">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b25"]) ? "checked" : ''; ?>  id="b25" name="b25">
                                 <label class="form-check-label" for="b25">
                                     Update Certificate
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b26" name="b26">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b26"]) ? "checked" : ''; ?>  id="b26" name="b26">
                                 <label class="form-check-label" for="b26">
                                     Directory Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b27" name="b27">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b27"]) ? "checked" : ''; ?>  id="b27" name="b27">
                                 <label class="form-check-label" for="b27">
                                     Add a new Directory
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b28" name="b28">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b28"]) ? "checked" : ''; ?>  id="b28" name="b28">
                                 <label class="form-check-label" for="b28">
                                     Delete a Directory
                                 </label>
@@ -283,73 +288,73 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b29" name="b29">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b29"]) ? "checked" : ''; ?>  id="b29" name="b29">
                                 <label class="form-check-label" for="b29">
                                     LMS Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b30" name="b30">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b30"]) ? "checked" : ''; ?>  id="b30" name="b30">
                                 <label class="form-check-label" for="b30">
                                     Add Course
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b31" name="b31">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b31"]) ? "checked" : ''; ?>  id="b31" name="b31">
                                 <label class="form-check-label" for="b31">
                                     Update Course
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b32" name="b32">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b32"]) ? "checked" : ''; ?>  id="b32" name="b32">
                                 <label class="form-check-label" for="b32">
                                     Fundraiser Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b33" name="b33">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b33"]) ? "checked" : ''; ?>  id="b33" name="b33">
                                 <label class="form-check-label" for="b33">
                                     Create Fundraiser
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b34" name="b34">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b34"]) ? "checked" : ''; ?>  id="b34" name="b34">
                                 <label class="form-check-label" for="b34">
                                     Update Fundraiser
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b35" name="b35">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b35"]) ? "checked" : ''; ?>  id="b35" name="b35">
                                 <label class="form-check-label" for="b35">
                                     Jobs Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b36" name="b36">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b36"]) ? "checked" : ''; ?>  id="b36" name="b36">
                                 <label class="form-check-label" for="b36">
                                     Add new Job
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b37" name="b37">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b37"]) ? "checked" : ''; ?>  id="b37" name="b37">
                                 <label class="form-check-label" for="b37">
                                     Update Job
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="b38" name="b38">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b38"]) ? "checked" : ''; ?>  id="b38" name="b38">
                                 <label class="form-check-label" for="b38">
                                     Store Management
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b39" name="b39">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b39"]) ? "checked" : ''; ?>  id="b39" name="b39">
                                 <label class="form-check-label" for="b39">
                                     Add a new Product
                                 </label>
                             </div>
                             <div class="form-check ml-4">
-                                <input class="form-check-input" type="checkbox" value="" id="b40" name="b40">
+                                <input class="form-check-input"  type="checkbox" <?php echo !empty($row["b40"]) ? "checked" : ''; ?>  id="b40" name="b40">
                                 <label class="form-check-label" for="b40">
                                     Edit Product
                                 </label>
