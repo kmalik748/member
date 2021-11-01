@@ -83,6 +83,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="./admin_permissions.php">Admin Permissions</a>
+                        <a class="dropdown-item" href="./admin_recover_contacts.php">Deleted Contacts</a>
                     </div>
                 </div>
             </li>

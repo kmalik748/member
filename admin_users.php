@@ -46,7 +46,7 @@
         <tbody>
                 <?php
                     require 'app/db.php';
-                    $sql = "SELECT * FROM users WHERE is_admin=0";
+                    $sql = "SELECT * FROM users WHERE is_admin=0 and deleted=0";
                     $res = mysqli_query($con, $sql);
                     while($row = mysqli_fetch_array($res)){
                       $user = $row["id"];

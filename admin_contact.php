@@ -2,7 +2,9 @@
   require 'app/app.php';
     if(isset($_POST["del_contact"])){
         $id = $_POST["contact_id"];
-        $sql = "DELETE FROM users WHERE id=$id";
+//        $sql = "DELETE FROM users WHERE id=$id";
+        $delDate = date("Y-m-d");
+        $sql = "UPDATE users set deleted=1, del_date='$delDate' WHERE id=$id";
         if(phpRunSingleQuery($sql)){
             js_alert("Contact Deleted!");
             js_redirect("admin_contact.php");
@@ -101,7 +103,7 @@
                             <tbody>
                             <?php
                             require 'app/db.php';
-                            $sql = "SELECT * FROM users WHERE is_admin=0";
+                            $sql = "SELECT * FROM users WHERE is_admin=0 and deleted=0";
 //                            echo $sql;
                             $res = mysqli_query($con, $sql);
                             while($row = mysqli_fetch_array($res)){
