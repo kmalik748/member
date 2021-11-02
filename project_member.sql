@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2021 at 01:01 PM
+-- Generation Time: Nov 02, 2021 at 08:12 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -56,7 +56,8 @@ INSERT INTO `adminlogs` (`id`, `admin_id`, `message`, `date_time`) VALUES
 (24, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:57:28.322836'),
 (25, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:58:35.975705'),
 (26, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:59:31.604887'),
-(27, 1, 'File Uploaded to User ID # 5', '2021-04-28 19:00:08.949023');
+(27, 1, 'File Uploaded to User ID # 5', '2021-04-28 19:00:08.949023'),
+(28, 1, 'Inserted Engagement For UserID # 0 By Admin # 1', NULL);
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,8 @@ CREATE TABLE `communication_logs_calls` (
 --
 
 INSERT INTO `communication_logs_calls` (`id`, `user_id`, `call_date`, `outcome`, `notes`) VALUES
-(6, 5, '2021-04-27', 'Donation', 'Some notes here');
+(6, 5, '2021-04-27', 'Donation', 'Some notes here'),
+(7, 0, '2021-11-25', 'Donation', 'Testing call');
 
 -- --------------------------------------------------------
 
@@ -403,17 +405,19 @@ INSERT INTO `lms` (`id`, `name`, `content`, `message`, `visible`) VALUES
 
 CREATE TABLE `memberships` (
   `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL
+  `name` varchar(20) NOT NULL,
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `memberships`
 --
 
-INSERT INTO `memberships` (`id`, `name`) VALUES
-(2, 'Testing1'),
-(3, 'aaaa'),
-(4, 'Top level Memebr');
+INSERT INTO `memberships` (`id`, `name`, `price`) VALUES
+(2, 'Testing1', 0),
+(4, 'Top level Memeber', 10),
+(5, '1231234', 44),
+(6, '111', 222);
 
 -- --------------------------------------------------------
 
@@ -457,7 +461,8 @@ INSERT INTO `member_engagement` (`id`, `user_id`, `date_now`) VALUES
 (2, 5, '2021-04-27'),
 (3, 5, '2021-04-14'),
 (4, 5, '2021-04-27'),
-(5, 5, '2021-04-27');
+(5, 5, '2021-04-27'),
+(6, 0, '2021-11-25');
 
 -- --------------------------------------------------------
 
@@ -708,6 +713,27 @@ INSERT INTO `users_files` (`id`, `user_id`, `category`, `filename`, `date_time`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `user_notes`
+--
+
+CREATE TABLE `user_notes` (
+  `id` int(11) NOT NULL,
+  `notes` varchar(500) NOT NULL,
+  `date_time` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_notes`
+--
+
+INSERT INTO `user_notes` (`id`, `notes`, `date_time`) VALUES
+(1, 'Testing Notes', '2021-11-02'),
+(2, 'This is a premium user', '2021-11-02'),
+(3, 'Testing 123 Note', '2021-11-02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `videolibrary`
 --
 
@@ -910,6 +936,12 @@ ALTER TABLE `users_files`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `user_notes`
+--
+ALTER TABLE `user_notes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `videolibrary`
 --
 ALTER TABLE `videolibrary`
@@ -929,7 +961,7 @@ ALTER TABLE `vote`
 -- AUTO_INCREMENT for table `adminlogs`
 --
 ALTER TABLE `adminlogs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `campaign`
@@ -965,7 +997,7 @@ ALTER TABLE `committee_roles`
 -- AUTO_INCREMENT for table `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_calls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `communication_logs_faxes`
@@ -1019,7 +1051,7 @@ ALTER TABLE `lms`
 -- AUTO_INCREMENT for table `memberships`
 --
 ALTER TABLE `memberships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `membership_history`
@@ -1031,7 +1063,7 @@ ALTER TABLE `membership_history`
 -- AUTO_INCREMENT for table `member_engagement`
 --
 ALTER TABLE `member_engagement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `organizations`
@@ -1068,6 +1100,12 @@ ALTER TABLE `recipient`
 --
 ALTER TABLE `survey`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_notes`
+--
+ALTER TABLE `user_notes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `videolibrary`

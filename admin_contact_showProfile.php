@@ -353,15 +353,77 @@
                                 </div>
 
                                 <div class="tab-pane" id="log-notes">
-                                    <input type="hidden" name="noteID" id="noteID" value="">
-                                    <!--<label for="textareaNote" class="control-label">
-                                        <strong>Notes</strong>
-                                    </label>-->
-                                    <textarea name="textareaNote" id="textareaNote" rows="6" class="form-control my-2" placeholder="Notes"></textarea>
+                                    <form action="" method="POST">
 
-                                    <div class="btn-margins">
-                                        <a class="btn btn-success" href="javascript:" id="saveNote"><i class="icon-save"></i>Save</a>
-                                        <a class="btn btn-danger" href="javascript:" id="cancelEditNote" style="display: none;"><i class="icon-remove"></i>Cancel Edit</a>
+                                        <textarea name="textareaNote" id="textareaNote" rows="6" class="form-control my-2" placeholder="Notes"></textarea>
+
+                                        <div class="btn-margins">
+                                            <button class="btn btn-success" type="submit" id="view-all-phone-log" name="saveNotes">
+                                                <i class="fas fa-save"></i> Save
+                                            </button>
+                                            <button class="btn btn-primary" type="button" id="view-all-phone-log" data-toggle="modal" data-target="#viewAllNotesRecords">
+                                                <i class="fas fa-list"></i> View All
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                    <?php
+                                        if(isset($_POST["saveNotes"])){
+                                            $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                                            $notes = $_POST["textareaNote"];
+                                            $date = date("Y-m-d");
+                                            if(phpRunSingleQuery("INSERT INTO user_notes (notes, date_time) VALUES ('$notes', '$date')")){
+                                                js_alert("Notes Log Inserted");
+                                                js_redirect($actual_link);
+                                            }
+                                        }
+                                    ?>
+
+
+                                    <!-- Modal View All Notes -->
+                                    <div class="modal fade" id="viewAllNotesRecords" tabindex="-1" role="dialog" aria-labelledby="viewAllNotesRecords" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Notes Log</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Notes</th>
+                                                            <th>Date</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <?php
+                                                        $rows = phpMysqliFetchAll("SELECT * FROM user_notes");
+                                                        foreach ($rows as $row){
+                                                            ?>
+                                                            <tr>
+                                                                <td><?php echo $row["notes"];  ?></td>
+                                                                <td><?php echo $row["date_time"];  ?></td>
+                                                            </tr>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <th>Notes</th>
+                                                            <th>Date</th>
+                                                        </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Modal -->
