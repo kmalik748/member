@@ -372,7 +372,7 @@
                                             $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                                             $notes = $_POST["textareaNote"];
                                             $date = date("Y-m-d");
-                                            if(phpRunSingleQuery("INSERT INTO user_notes (notes, date_time) VALUES ('$notes', '$date')")){
+                                            if(phpRunSingleQuery("INSERT INTO user_notes (notes, userID, date_time) VALUES ('$notes', $pageID, '$date')")){
                                                 js_alert("Notes Log Inserted");
                                                 js_redirect($actual_link);
                                             }
@@ -400,7 +400,7 @@
                                                         </thead>
                                                         <tbody>
                                                         <?php
-                                                        $rows = phpMysqliFetchAll("SELECT * FROM user_notes");
+                                                        $rows = phpMysqliFetchAll("SELECT * FROM user_notes WHERE userID=$pageID");
                                                         foreach ($rows as $row){
                                                             ?>
                                                             <tr>
@@ -845,7 +845,7 @@
                           </thead>
                           <tbody>
                           <?php
-                          $rows = phpMysqliFetchAll("SELECT * FROM communication_logs_calls");
+                          $rows = phpMysqliFetchAll("SELECT * FROM communication_logs_calls WHERE user_id=$pageID");
                           foreach ($rows as $row){
                               ?>
                               <tr>

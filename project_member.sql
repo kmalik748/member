@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2021 at 08:12 AM
+-- Generation Time: Nov 02, 2021 at 08:40 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -57,7 +57,9 @@ INSERT INTO `adminlogs` (`id`, `admin_id`, `message`, `date_time`) VALUES
 (25, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:58:35.975705'),
 (26, 1, 'File Uploaded to User ID # 5', '2021-04-28 18:59:31.604887'),
 (27, 1, 'File Uploaded to User ID # 5', '2021-04-28 19:00:08.949023'),
-(28, 1, 'Inserted Engagement For UserID # 0 By Admin # 1', NULL);
+(28, 1, 'Inserted Engagement For UserID # 0 By Admin # 1', NULL),
+(29, 1, 'Inserted Engagement For UserID # 0 By Admin # 1', NULL),
+(30, 1, 'Inserted Engagement For UserID # 0 By Admin # 1', NULL);
 
 -- --------------------------------------------------------
 
@@ -187,7 +189,10 @@ CREATE TABLE `communication_logs_calls` (
 
 INSERT INTO `communication_logs_calls` (`id`, `user_id`, `call_date`, `outcome`, `notes`) VALUES
 (6, 5, '2021-04-27', 'Donation', 'Some notes here'),
-(7, 0, '2021-11-25', 'Donation', 'Testing call');
+(7, 0, '2021-11-25', 'Donation', 'Testing call'),
+(8, 0, '2021-11-03', 'Event', 'This is a new note for this member'),
+(9, 0, '2021-11-03', 'Sponsorship', '45'),
+(10, 0, '2021-11-03', 'Donation', 'This is a testing note 1234');
 
 -- --------------------------------------------------------
 
@@ -414,10 +419,11 @@ CREATE TABLE `memberships` (
 --
 
 INSERT INTO `memberships` (`id`, `name`, `price`) VALUES
-(2, 'Testing1', 0),
+(2, 'Testing1', 52),
 (4, 'Top level Memeber', 10),
 (5, '1231234', 44),
-(6, '111', 222);
+(6, '111', 222),
+(7, 'Premium Membership', 150);
 
 -- --------------------------------------------------------
 
@@ -436,8 +442,8 @@ CREATE TABLE `membership_history` (
 --
 
 INSERT INTO `membership_history` (`id`, `userID`, `membershipID`) VALUES
-(1, 4, 3),
-(2, 8, 2),
+(1, 1, 3),
+(2, 5, 2),
 (3, 2, 4);
 
 -- --------------------------------------------------------
@@ -462,7 +468,10 @@ INSERT INTO `member_engagement` (`id`, `user_id`, `date_now`) VALUES
 (3, 5, '2021-04-14'),
 (4, 5, '2021-04-27'),
 (5, 5, '2021-04-27'),
-(6, 0, '2021-11-25');
+(6, 0, '2021-11-25'),
+(7, 0, '2021-11-03'),
+(8, 0, '2021-11-03'),
+(9, 0, '2021-11-03');
 
 -- --------------------------------------------------------
 
@@ -684,9 +693,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `email`, `password`, `organizationID`, `jobTitle`, `salutation`, `middle_name`, `last_name`, `dob`, `phone`, `gender`, `language`, `address`, `is_admin`, `deleted`, `del_date`) VALUES
-(0, 'Kashif', 'lol@abc.om', 'alskdfj', 3, 'Nope', 'Mr.', 'ali', 'rabbani', '2021-11-01', '234234', 'Male', 'rabbani', 'asdf', 0, 0, NULL),
-(1, 'Kashif Ali', 'kashif@ali.com', 'kashif@ali.com', 2, '', 'Mr.', '', '', '2021-04-14', '', 'Male', 'English', '', 1, 0, '2021-11-02'),
-(5, 'Random', 'random@user.com', 'random', 6, 'Employee', 'M.', 'a', 'user', '3333-03-31', '3333838', 'Male', 'English', 'kadflajdf', 0, 0, NULL);
+(1, 'Kashif', 'lol@abc.om', 'alskdfj', 3, 'Nope', 'Mr.', 'ali', 'rabbani', '2021-11-01', '234234', 'Male', 'rabbani', 'asdf', 1, 0, NULL),
+(2, 'Kashif Ali', 'kashif@ali.com', 'kashif@ali.com', 2, '', 'Mr.', '', '', '2021-04-14', '', 'Male', 'English', '', 1, 0, '2021-11-02'),
+(5, 'Random', 'random@user.com', 'random', 6, 'Employee', 'M.', 'a', 'user', '3333-03-31', '3333838', 'Male', 'English', 'kadflajdf', 0, 0, NULL),
+(6, 'Kashif', 'kmalik748@gmail.com', 'afds', 3, 'kmalik748@gmail.com', 'Dr.', 'ali', 'Diaz', '2021-11-04', '234234', 'Male', 'Diaz', 'Main Street', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -719,6 +729,7 @@ INSERT INTO `users_files` (`id`, `user_id`, `category`, `filename`, `date_time`)
 CREATE TABLE `user_notes` (
   `id` int(11) NOT NULL,
   `notes` varchar(500) NOT NULL,
+  `userID` int(11) NOT NULL,
   `date_time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -726,10 +737,10 @@ CREATE TABLE `user_notes` (
 -- Dumping data for table `user_notes`
 --
 
-INSERT INTO `user_notes` (`id`, `notes`, `date_time`) VALUES
-(1, 'Testing Notes', '2021-11-02'),
-(2, 'This is a premium user', '2021-11-02'),
-(3, 'Testing 123 Note', '2021-11-02');
+INSERT INTO `user_notes` (`id`, `notes`, `userID`, `date_time`) VALUES
+(1, 'Testing Notes', 0, '2021-11-02'),
+(2, 'This is a premium user', 0, '2021-11-02'),
+(3, 'Testing 123 Note', 0, '2021-11-02');
 
 -- --------------------------------------------------------
 
@@ -961,7 +972,7 @@ ALTER TABLE `vote`
 -- AUTO_INCREMENT for table `adminlogs`
 --
 ALTER TABLE `adminlogs`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `campaign`
@@ -997,7 +1008,7 @@ ALTER TABLE `committee_roles`
 -- AUTO_INCREMENT for table `communication_logs_calls`
 --
 ALTER TABLE `communication_logs_calls`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `communication_logs_faxes`
@@ -1051,7 +1062,7 @@ ALTER TABLE `lms`
 -- AUTO_INCREMENT for table `memberships`
 --
 ALTER TABLE `memberships`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `membership_history`
@@ -1063,7 +1074,7 @@ ALTER TABLE `membership_history`
 -- AUTO_INCREMENT for table `member_engagement`
 --
 ALTER TABLE `member_engagement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `organizations`
@@ -1100,6 +1111,12 @@ ALTER TABLE `recipient`
 --
 ALTER TABLE `survey`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user_notes`

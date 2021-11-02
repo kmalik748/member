@@ -51,8 +51,9 @@ error_reporting(0);
 	         return true;
          }else{
 	         js_console_log(mysqli_error($GLOBALS["con"]));
+             js_console_log("=====================================");
 	         js_console_log($sql);
-	         js_console_log("=====================================");
+             exit(); die();
 	         return false;
          }
     }
@@ -75,7 +76,7 @@ error_reporting(0);
 
     function insertAdminLog($message){
         $adminID = getloggedInUserId();
-        return phpRunSingleQuery("INSERT INTO adminLogs (admin_id, message) VALUES ($adminID, '$message')");
+        return phpRunSingleQuery("INSERT INTO adminlogs (admin_id, message) VALUES ($adminID, '$message')");
     }
 
     function currentPath(){
