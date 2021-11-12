@@ -109,6 +109,9 @@
           <li class="nav-item <?php if($title=='User Dashboard' || $title=='Admin Dashboard') echo 'active'; ?>">
             <a class="nav-link" href="./admin_dashboard.php">Dashboard</a>
           </li>
+          <li class="nav-item <?php if($title=='User Dashboard' || $title=='Admin Dashboard') echo 'active'; ?>">
+            <a class="nav-link" href="./admin_dashboard.php">Profile</a>
+          </li>
           <li class="nav-item">
               <div class="dropdown">
                 <button type="button" class="btn btn-primary dropdown-toggle bg-dark border-0" data-toggle="dropdown">

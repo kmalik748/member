@@ -1,6 +1,20 @@
 <?php
-  require 'app/app.php';
+
+require 'app/app.php';
+
+if(isset($_POST["resetPass"])){
+    $id = $_POST["id"];
+    $password = $_POST["password"];
+    $s = "UPDATE users SET password='$password' WHERE id=$id";
+    if(phpRunSingleQuery($s)){
+        js_alert("Password Updated Successfully");
+        js_redirect("admin_contact_showProfile.php?userID=$id");
+    }
+}
+
   $pageID = isset($_GET["userID"]) ? $_GET["userID"] : null;
+
+
   $sql = "SELECT * FROM users WHERE id = $pageID";
   $userDetails = phpMysqliFetchSingle($sql);
 

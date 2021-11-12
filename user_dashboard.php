@@ -48,7 +48,7 @@
 
       <div class="jumbotron">
         <h1>Welcome back, <b><?php echo $_SESSION["name"]; ?></b>!</h1>
-        <p>User Role: <b><?php echo $membership; ?></b>!</p>
+        <p>Your Role: <b><?php echo $membership; ?></b>!</p>
       </div>
 
       <hr>
