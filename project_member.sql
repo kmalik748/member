@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2021 at 08:40 AM
+-- Generation Time: Nov 12, 2021 at 07:56 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.30
 
@@ -434,17 +434,18 @@ INSERT INTO `memberships` (`id`, `name`, `price`) VALUES
 CREATE TABLE `membership_history` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `membershipID` int(11) NOT NULL
+  `membershipID` int(11) NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `membership_history`
 --
 
-INSERT INTO `membership_history` (`id`, `userID`, `membershipID`) VALUES
-(1, 1, 3),
-(2, 5, 2),
-(3, 2, 4);
+INSERT INTO `membership_history` (`id`, `userID`, `membershipID`, `date_time`) VALUES
+(1, 1, 3, '2021-11-11 11:57:29'),
+(2, 5, 2, '2021-11-11 11:57:29'),
+(3, 2, 4, '2021-11-11 11:57:29');
 
 -- --------------------------------------------------------
 
@@ -696,7 +697,7 @@ INSERT INTO `users` (`id`, `first_name`, `email`, `password`, `organizationID`, 
 (1, 'Kashif', 'lol@abc.om', 'alskdfj', 3, 'Nope', 'Mr.', 'ali', 'rabbani', '2021-11-01', '234234', 'Male', 'rabbani', 'asdf', 1, 0, NULL),
 (2, 'Kashif Ali', 'kashif@ali.com', 'kashif@ali.com', 2, '', 'Mr.', '', '', '2021-04-14', '', 'Male', 'English', '', 1, 0, '2021-11-02'),
 (5, 'Random', 'random@user.com', 'random', 6, 'Employee', 'M.', 'a', 'user', '3333-03-31', '3333838', 'Male', 'English', 'kadflajdf', 0, 0, NULL),
-(6, 'Kashif', 'kmalik748@gmail.com', 'afds', 3, 'kmalik748@gmail.com', 'Dr.', 'ali', 'Diaz', '2021-11-04', '234234', 'Male', 'Diaz', 'Main Street', 0, 0, NULL);
+(6, 'Kashif', 'kmalik748@gmail.com', 'abc', 3, 'kmalik748@gmail.com', 'Dr.', 'ali', 'Diaz', '2021-11-04', '234234', 'Male', 'Diaz', 'Main Street', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -1068,7 +1069,7 @@ ALTER TABLE `memberships`
 -- AUTO_INCREMENT for table `membership_history`
 --
 ALTER TABLE `membership_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `member_engagement`
