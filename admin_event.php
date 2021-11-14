@@ -63,15 +63,15 @@
                     <li class="nav-item">
                         <a class="nav-link" id="catagory-tab" data-toggle="tab" href="#catagory" role="tab" aria-controls="catagory" aria-selected="false">
                             <i class="fas fa-2x fa-users-cog appColor mr-2"></i>
-                            <span>Catagories</span>
+                            <span>Categories</span>
                         </a>
                     </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" id="Settings-tab" data-toggle="tab" href="#Settings" role="tab" aria-controls="Settings" aria-selected="false">-->
-<!--                            <i class="fas fa-2x fa-cogs appColor mr-2"></i>-->
-<!--                            <span>Settings</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" id="qr-tab" data-toggle="tab" href="#qr" role="tab" aria-controls="qr" aria-selected="false">
+                            <i class="fas fa-2x fa-qrcode appColor mr-2"></i>
+                            <span>QR Generator</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-9">
@@ -86,10 +86,10 @@
                     <div class="card-body">
                         <form method="POST" action="" enctype="multipart/form-data">
                             <div class="form-group row">
-                                <label for="Catagory" class="col-sm-3 col-form-label">Catagory Name </label>
+                                <label for="Catagory" class="col-sm-3 col-form-label">Category Name </label>
                                 <div class="col-sm-6">
                                     <select class="form-control" id="exampleFormControlSelect1" name="Catagory" required>
-                                        <option>-- Select Catagory --</option>
+                                        <option>-- Select Category --</option>
                                         <?php
                                         $rows = allCatagories();
                                         foreach ($rows as $row){
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCatagory">
-                                        Add Catagory
+                                        Add Category
                                     </button>
                                 </div>
                             </div>
@@ -279,7 +279,6 @@
               </div>
           </div>
       </div>
-
       <?php
         if(isset($_POST["add_new_cat"])){
             $name = $_POST["new_cat"];
@@ -295,7 +294,6 @@
             }
         }
       ?>
-						
                     <div class="tab-pane fade" id="All" role="tabpanel" aria-labelledby="All-tab">
                         <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
                             <thead>
@@ -454,6 +452,92 @@
                         </table>
 								
                     </div>
+                    <div class="tab-pane fade" id="qr" role="tabpanel" aria-labelledby="qr-tab">
+
+                        <table id="example" class="table table-striped table-bordered bg-white shadow" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Event Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            require 'app/db.php';
+                            $sql = "SELECT * FROM event";
+                            $res = mysqli_query($con, $sql);
+                            while($row = mysqli_fetch_assoc($res)){
+                                $Catagory = $row["name"];
+								$rndom = rand();
+                                ?>
+                                <tr>
+                                    <td><?php echo $Catagory; ?></td>
+                                    <td>
+                                        <button class="btn bg-appColorLight" data-toggle="modal" data-target="#delContact_<?php echo $rndom; ?>">
+                                            <i class="fas fa-qrcode"></i> Generate QR Code
+                                        </button>
+                                    </td>
+                                </tr>
+                                <!-- QrCode Modal -->
+                                <div class="modal" id="delContact_<?php echo $rndom; ?>">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <form action="" method="POST">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete a Role</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    <form method="post" action="admin_users.php">
+                                                        <input type="hidden" id="eventID_<?php echo $rndom; ?>" name="eventID" value="<?php echo $row['id']; ?>">
+                                                        <div class="form-group">
+                                                            <label for="selectUser">Select User:</label>
+                                                            <select class="form-control" id="selectUser_<?php echo $rndom; ?>" name="membership">
+                                                                <?php
+                                                                $sql1 = "SELECT * FROM users";
+                                                                $res1 = mysqli_query($con, $sql1);
+                                                                while($row1 = mysqli_fetch_array($res1)){
+                                                                    ?>
+                                                                    <option value="<?php echo $row1['id']; ?>"><?php echo $row1["first_name"]; ?></option>
+                                                                    <?php
+                                                                }
+                                                                ?>
+                                                            </select>
+                                                            <div class="mt-2 text-center">
+                                                                <i class="fas fa-spinner fa-spin fa-3x loader" id="loader_<?php echo $rndom; ?>"></i>
+                                                                <img class="qrImg" id="qrContent_<?php echo $rndom; ?>" src="">
+<!--                                                                <div id="qrContent"></div>-->
+                                                            </div>
+                                                            <button type="button" class="btn bg-appColorLight w-100 mt-4" onclick="getQR(<?php echo $rndom; ?>)">
+                                                                Generate QR
+                                                            </button>
+                                                        </div>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Category</th>
+                                <th>Action</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -466,9 +550,34 @@
 
       <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
       <script>
+          $(".qrImg").hide();
+          $(".loader").hide();
           $(document).ready(function() {
               $('#example').DataTable();
           } );
+          function getQR(id) {
+              console.log("#loader_"+id);
+              $("#loader_"+id).show();
+              var userID = $('#selectUser_'+id).find(":selected").attr('value');
+              var eventID = $("#eventID_"+id).val();
+              console.log(userID);
+              $("#qrContent_"+id).attr("src", "vendor/phpqrcode/generate.php?user="+userID+"&event="+eventID);
+              $("#qrContent_"+id).show();
+              $("#loader_"+id).hide();
+
+              // $.ajax
+              // ({
+              //     type: "POST",
+              //     url: "vendor/phpqrcode/generate.php",
+              //     data: "user="+userID+"&event="+eventID,
+              //     success: function(html)
+              //     {
+              //         $("#qrContent").attr("src", "vendor/phpqrcode/generate.php");
+              //         $("#loader").hide();
+              //         $("#qrContent").html(html);
+              //     }
+              // });
+          }
       </script>
 </body>
 
