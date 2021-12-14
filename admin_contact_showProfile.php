@@ -248,6 +248,9 @@ if(isset($_POST["resetPass"])){
                                 <li class="nav-item">
                                     <a class="nav-link" href="#log-file" data-grid-trigger="datagrid_filelog" data-toggle="tab">Files</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#inquiries" data-grid-trigger="datagrid_inquiries" data-toggle="tab">Inquires</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
 
@@ -280,6 +283,9 @@ if(isset($_POST["resetPass"])){
                                                         </option>
                                                         <option id="telephone-call-log-option-4" value="Event">
                                                             Event
+                                                        </option>
+                                                        <option id="telephone-call-log-option-4" value="Other">
+                                                            Other
                                                         </option>
                                                     </select>
                                                 </div>
@@ -461,22 +467,7 @@ if(isset($_POST["resetPass"])){
                                 </div>
 
                                 <div class="tab-pane " id="log-email">
-                                    <div class="modal fade in" id="email-log-view-modal">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                                    <h3 class="modal-title event-name">Email History</h3>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="email-log-view-pane-modal"></div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a href="javascript:" class="btn btn-danger" data-dismiss="modal"><i class="icon-remove"></i>Close</a>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                    <p class="lead mt-2">No records Found!</p>
                                 </div>
 
                                 <div class="tab-pane" id="log-fax">
@@ -653,6 +644,10 @@ if(isset($_POST["resetPass"])){
                                         }
                                     ?>
 
+                                </div>
+
+                                <div class="tab-pane " id="inquiries">
+                                    <p class="lead mt-2">No inquiries records Found!</p>
                                 </div>
                             </div>
                         </div>

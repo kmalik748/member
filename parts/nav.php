@@ -25,6 +25,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 <!--                        <a class="dropdown-item" href="./admin_membershipStats.php">View Membership Stats</a>-->
                         <a class="dropdown-item" href="./admin_membership.php">Membership Plans</a>
+                        <a class="dropdown-item" href="./admin_nonMembership_report.php">Non Member Report</a>
                     </div>
                 </div>
             </li>

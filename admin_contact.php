@@ -97,6 +97,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Membership</th>
+                                <th>Organization</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
@@ -133,6 +134,7 @@
                                         </a>
                                     </td>
                                     <td><?php echo $membership; ?></td>
+                                    <td><?php echo getOrgById($row["organizationID"]); ?></td>
                                     <td>
                                         <a href="admin_contact_showProfile.php?userID=<?php echo $user; ?>" class="text-info mr-1">
                                             <i class="fas fa-user"></i>
@@ -188,6 +190,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Membership</th>
+                                <th>Organization</th>
                                 <th>Actions</th>
                             </tr>
                             </tfoot>
