@@ -52,6 +52,42 @@
       </div>
 
       <hr>
+
+      <div class="row">
+          <div class="col-md-6">
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="box w-100 userHomeBox">
+                          <div class="boxContent d-flex flex-column align-items-center px-3 py-3">
+                              <i class="fas fa-briefcase fa-4x"></i>
+                              <h2 class="font-weight-normal">Jobs</h2>
+                              <p>Find jobs that match your skills, knowledge and experience </p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="box w-100 userHomeBox">
+                          <div class="boxContent d-flex flex-column align-items-center px-3 py-3">
+                              <i class="fas fa-shopping-cart fa-4x"></i>
+                              <h2 class="font-weight-normal">Shop Online</h2>
+                              <p>Browse and purchase products in our online store.</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-12 mt-3">
+                      <div class="box w-100 userHomeBox">
+                          <div class="boxContent d-flex flex-column align-items-center px-3 py-3">
+                              <i class="fas fa-book fa-4x"></i>
+                              <h2 class="font-weight-normal">Training Zone</h2>
+                              <p>Training that supports corporate objectives, learning needs, job performance and career development.</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-6">sfd</div>
+      </div>
+
   </div>
 
 <?php

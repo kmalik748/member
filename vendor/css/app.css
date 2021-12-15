@@ -181,3 +181,9 @@ ul#secondNavTabs li a.active
 .topNav ul li div.dropdown{
 	margin-top: 2px;
 }
+.userHomeBox{
+	background-color: #dddddd;
+}
+.userHomeBox p{
+	text-align: center;
+}

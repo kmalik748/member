@@ -31,6 +31,7 @@ error_reporting(0);
         }
         return $output;
     }
+
 	function phpMysqliFetchSingle($sql){
         $output = array();
         if(mysqli_query($GLOBALS["con"], $sql)){
@@ -58,13 +59,14 @@ error_reporting(0);
          }
     }
 
-
 	function allOrganizations(){
         return phpMysqliFetchAll("SELECT * FROM organizations");
     }
+
 	function allRecipients(){
         return phpMysqliFetchAll("SELECT * FROM users");
     }
+
 	function allCatagories(){
         return phpMysqliFetchAll("SELECT * FROM catagories");
     }
@@ -77,6 +79,11 @@ error_reporting(0);
     function insertAdminLog($message){
         $adminID = getloggedInUserId();
         return phpRunSingleQuery("INSERT INTO adminlogs (admin_id, message) VALUES ($adminID, '$message')");
+    }
+
+    function getOrgById($id){
+        $output = phpMysqliFetchSingle("SELECT * FROM organizations WHERE id=$id");
+        return $output["name"];
     }
 
     function currentPath(){
